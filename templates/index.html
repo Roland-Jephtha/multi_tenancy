@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon icon-->
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/images/logos/favicon.png' %}" />
+
+    <!-- Core Css -->
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}" />
+
+    <title>Estate Board</title>
+</head>
+<body class="vh-100">
+
+    <div class="logo-img text-center d-flex justify-content-center align-items-center d-block mb-5 w-100 h-100">
+        <a href="{% url 'login' %}" class="text-nowrap logo-img text-center d-block mb-5 w-100">
+            <img src="{% static 'assets/images/logos/logo-light.svg' %}" class="dark-logo" alt="Logo-Dark" />
+        </a>
+    </div>
+
+</body>
+</html>

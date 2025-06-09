@@ -1,13 +1,5 @@
 from django.shortcuts import render
 
 # Create your views here.
-
-
-
-
-
-def login(request):
+def dashboard(request):
     return render(request, 'auth/login.html')
-
-def signup(request):
-    return render(request, 'auth/register.html')

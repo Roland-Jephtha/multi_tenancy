@@ -5,12 +5,6 @@
 
 {% block content %}
 
-
-
-
-
-
-
     <div id="main-wrapper" class="auth-customizer-none">
         <div class="position-relative overflow-hidden radial-gradient min-vh-100 w-100 d-flex align-items-center justify-content-center">
             <div class="d-flex align-items-center justify-content-center w-100">
@@ -19,9 +13,9 @@
                         <div class="card mb-0">
                             <div class="card-body">
                                 <a href="../main/index.html" class="text-nowrap logo-img text-center d-block mb-5 w-100">
-                  <img src="{% static 'assets/images/logos/dark-logo.svg' %}" class="dark-logo" alt="Logo-Dark" />
-                  <img src="{% static 'assets/images/logos/light-logo.svg' %}" class="light-logo" alt="Logo-light" />
-                </a>
+                                  <img src="{% static 'assets/images/logos/logo-eb.svg' %}" class="dark-logo" alt="Logo-Dark" />
+                                  <img src="{% static 'assets/images/logos/logo-eb.svg' %}" class="light-logo" alt="Logo-light" />
+                                </a>
                                 <div class="row">
                                     <div class="col-6 mb-2 mb-sm-0">
                                         <a class="btn text-dark border fw-normal d-flex align-items-center justify-content-center rounded-2 py-8" href="javascript:void(0)" role="button">
@@ -62,9 +56,8 @@
                                     </div>
                                     <a href="../main/index.html" class="btn btn-primary w-100 py-8 mb-4 rounded-2">Sign In</a>
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <p class="fs-4 mb-0 fw-medium">New to Modernize?</p>
-                                        <a class="text-primary fw-medium ms-2" href="../main/authentication-register.html">Create an
-                      account</a>
+                                        <p class="fs-4 mb-0 fw-medium">New to Estate Board?</p>
+                                        <a class="text-primary fw-medium ms-2" href="{% url 'signup' %}">Create an account</a>
                                     </div>
                                 </form>
                             </div>
@@ -79,8 +72,8 @@
             }
         </script>
         <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-      <i class="icon ti ti-settings fs-7"></i>
-    </button>
+          <i class="icon ti ti-settings fs-7"></i>
+        </button>
 
         <div class="offcanvas customizer offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
             <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
@@ -225,10 +218,5 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 
 {% endblock content %}

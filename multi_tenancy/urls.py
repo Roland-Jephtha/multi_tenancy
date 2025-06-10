@@ -7,6 +7,7 @@ from multi_tenancy.views import login, signup, index, onboarding, logout_view
 
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),

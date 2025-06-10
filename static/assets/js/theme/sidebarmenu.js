@@ -5,19 +5,19 @@ if ((at = "vertical")) {
     // Active 2 file at same time 
     // ----------------------------------------
 
-    var currentNewURL =
-        window.location != window.parent.location ?
-        document.referrer :
-        document.location.href;
+    // var currentNewURL =
+    //     window.location != window.parent.location ?
+    //     document.referrer :
+    //     document.location.href;
 
-    var current_link = document.getElementById("get-url");
-    if (currentNewURL.includes("/main/index.html")) {
-        current_link.setAttribute("href", "../main/index.html");
-    } else if (currentNewURL.includes("/index.html")) {
-        current_link.setAttribute("href", "./index.html");
-    } else {
-        current_link.setAttribute("href", "./");
-    }
+    // var current_link = document.getElementById("get-url");
+    // if (currentNewURL.includes("/main/index.html")) {
+    //     current_link.setAttribute("href", "../main/index.html");
+    // } else if (currentNewURL.includes("/index.html")) {
+    //     current_link.setAttribute("href", "./index.html");
+    // } else {
+    //     current_link.setAttribute("href", "./");
+    // }
     // end
 
 

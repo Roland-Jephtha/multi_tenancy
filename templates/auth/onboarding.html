@@ -1,0 +1,92 @@
+
+
+
+
+
+
+
+
+
+
+{% extends "auth/base.html" %}
+
+
+{% load static %}
+
+{% load socialaccount %}
+
+{% block content %}
+
+
+
+    <div id="main-wrapper" class="auth-customizer-none">
+        <div class="position-relative overflow-hidden radial-gradient min-vh-100 w-100 d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center w-100">
+                <div class="row justify-content-center w-100">
+                    <div class="col-md-8 col-lg-6 col-xxl-3 auth-card">
+                        <div class="card mb-0">
+                            <div class="card-body">
+                                <a href="{% url 'index' %}" class="text-nowrap logo-img text-center d-block mb-5 w-100">
+                                  <img src="{% static 'assets/images/logos/logo-eb.svg' %}" class="dark-logo" alt="Logo-Dark" />
+                                  <img src="{% static 'assets/images/logos/logo-eb.svg' %}" class="light-logo" alt="Logo-light" />
+                                </a>
+                                <div class="row">
+                                    <div class="col-12 mb-2 mb-sm-0">
+
+                                    <h2>Welcome, {{ request.user.username }} 👋</h2>
+                                    <p>Please complete your profile to continue</p>
+
+
+                                    </div>
+
+                                </div>
+                     
+                                <form method ="post">
+
+                                        {% csrf_token %}
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Fullname</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="fullname" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="positionSelect" class="form-label">Position</label>
+                                        <select class="form-control" id="positionSelect" name="position" required>
+                                            <option value="">Select Position</option>
+                                            <option value="tenant">Tenant</option>
+                                            <option value="landlord">Landlord</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Contact Address</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="contact_address" required>
+                                    </div>
+
+
+
+
+
+                                    </div>
+
+                                    <button class="btn btn-primary w-100 py-8 mb-4 rounded-2">Complete Onboarding</button>
+                              
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function handleColorTheme(e) {
+                document.documentElement.setAttribute("data-color-theme", e);
+            }
+        </script>
+        <button class="btn btn-primary p-3 rounded-circle d-flex align-items-center justify-content-center customizer-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+          <i class="icon ti ti-settings fs-7"></i>
+        </button>
+
+    </div>
+
+{% endblock content %}
+

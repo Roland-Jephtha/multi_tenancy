@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from multi_tenancy.views import login, signup, index
+from multi_tenancy.views import login, signup, index, onboarding, logout_view
 
 
 
@@ -12,7 +12,11 @@ urlpatterns = [
     path('', index, name='index'),
     path('signup/', signup, name='signup'),
     path('login/', login, name='login'),
-    path('landlord/', include('landlord.urls'))
+    path('onboarding/', onboarding, name='onboarding'),
+    path("logout/", logout_view, name="logout"),
+    path('landlord/', include('landlord.urls')),
+    path('accounts/', include('allauth.urls')),
+
 ]
 
 

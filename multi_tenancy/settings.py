@@ -39,7 +39,47 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'landlord',
+
+
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+
+
+
+
+
+
+
+
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', # standard django backend
+    'allauth.account.auth_backends.AuthenticationBackend', # all auth backend
+]
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'login'
+ACCOUNT_SIGNUP_REDIRECT_URL = '/onboarding/'
+
+
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+
+
+
+AUTH_USER_MODEL = 'landlord.User'
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,6 +89,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'multi_tenancy.urls'
@@ -70,6 +111,39 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'multi_tenancy.wsgi.application'
+
+
+
+
+
+
+
+
+
+
+
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '648406728240-famf2t59ud87ao38vg4cah41fdhehkc1.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+
+
+
 
 
 # Database

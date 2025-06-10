@@ -19069,9 +19069,9 @@
     --bs-light-primary: rgba(29,  163,  94, 0.1);
     --bs-primary-bg-subtle: rgba(29,  163,  94, 0.1);
     --bs-secondary: #49beff;
-    --bs-secondary-rgb: 73, 190, 255;
-    --bs-light-secondary: rgba(73, 190, 255, 0.1);
-    --bs-secondary-bg-subtle: rgba(73, 190, 255, 0.1)
+    --bs-secondary-rgb: 29,  163,  94;
+    --bs-light-secondary: rgba(29,  163,  94, 0.1);
+    --bs-secondary-bg-subtle: rgba(29,  163,  94, 0.1)
 }
 
 [data-bs-theme=dark][data-color-theme=Blue_Theme]:root .btn-primary,
@@ -19273,7 +19273,7 @@
     --bs-indigo: #6610f2;
     --bs-light-indigo: #ebf3fe;
     --bs-primary-rgb: 29,  163,  94;
-    --bs-secondary-rgb: 73, 190, 255;
+    --bs-secondary-rgb: 29,  163,  94;
     --bs-success-rgb: 19, 222, 185;
     --bs-info-rgb: 83, 155, 255;
     --bs-warning-rgb: 255, 174, 31;
@@ -23193,7 +23193,7 @@ fieldset:disabled .btn {
     --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #49beff;
     --bs-btn-hover-border-color: #49beff;
-    --bs-btn-focus-shadow-rgb: 73, 190, 255;
+    --bs-btn-focus-shadow-rgb: 29,  163,  94;
     --bs-btn-active-color: #fff;
     --bs-btn-active-bg: #49beff;
     --bs-btn-active-border-color: #49beff;

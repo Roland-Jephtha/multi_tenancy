@@ -18,13 +18,11 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def onboarding(request):
     if request.method == 'POST':
-        # Save onboarding data here
         full_name = request.POST.get('full_name')
         phone = request.POST.get('phone')
         address = request.POST.get('address')
-        # Save to profile or another model
 
-        return redirect('/')  # Redirect after completion
+        return redirect('/')  
 
     return render(request, 'auth/onboarding.html')
 

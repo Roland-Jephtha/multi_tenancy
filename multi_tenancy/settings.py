@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -113,10 +115,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'multi_tenancy.wsgi.application'
 
 
-
-
-
-
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 
@@ -127,8 +126,8 @@ WSGI_APPLICATION = 'multi_tenancy.wsgi.application'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': '648406728240-famf2t59ud87ao38vg4cah41fdhehkc1.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': os.getenv('CLIENT_ID'), 
+            'secret': os.getenv('CLIENT_SECRET'),
             'key': ''
         },
         'SCOPE': [

@@ -95,3 +95,7 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+
+
+def news(request):
+    return render(request, 'dashboard/news.html')

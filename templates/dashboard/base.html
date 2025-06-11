@@ -44,7 +44,6 @@
 
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar>
                     <ul id="sidebarnav">
-
                         <!-- ---------------------------------- -->
                         <!-- Home -->
                         <!-- ---------------------------------- -->
@@ -124,7 +123,6 @@
                             </a>
                         </li>
 
-
                         <!-- ---------------------------------- -->
                         <!-- Template Nav Bar -->
                         <!-- ---------------------------------- -->
@@ -178,6 +176,7 @@
                                 </li>
                             </ul>
                         </li>
+
                     </ul>
                 </nav>
 
@@ -189,10 +188,14 @@
                         <div class="john-title">
                             <h6 class="mb-0 fs-4 fw-semibold">Dorathy</h6>
                             <span class="fs-2">Landlord</span>
-                        </div>
-                        <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
-                            <i class="ti ti-power fs-6"></i>
-                        </button>
+                        </div>                      
+                        {% if user.is_authenticated%}
+                            <a class="text-danger fw-medium" href="{% url 'logout' %}">
+                                <button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
+                                    <i class="ti ti-power fs-6"></i>
+                                </button>
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -351,7 +354,11 @@
                                                     </a>
                                                 </div>
                                                 <div class="d-grid py-4 px-7 pt-8">
-                                                    <a href="../main/authentication-login.html" class="btn btn-outline-primary">Log Out</a>
+                                                    {% if user.is_authenticated%}
+                                                    <a class="btn btn-outline-primary" href="{% url 'logout' %}">
+                                                        Log Out
+                                                    </a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -546,7 +553,11 @@
                                                     </a>
                                                 </div>
                                                 <div class="d-grid py-4 px-7 pt-8">
-                                                    <a href="../main/authentication-login.html" class="btn btn-outline-primary">Log Out</a>
+                                                    {% if user.is_authenticated%}
+                                                    <a class="btn btn-outline-primary" href="{% url 'logout' %}">
+                                                        Log Out
+                                                    </a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>

@@ -5,11 +5,6 @@ from django.conf.urls.static import static
 from multi_tenancy.views import login, signup, index, onboarding, logout_view, news
 
 
-
-
-
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
@@ -22,7 +17,6 @@ urlpatterns = [
 
     path('news/', news, name='news'),
 ]
-
 
 
 

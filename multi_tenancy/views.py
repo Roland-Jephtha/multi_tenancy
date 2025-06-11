@@ -5,40 +5,24 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
-
-
-
-
-
-
-
-
-
-
 @login_required
 def onboarding(request):
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
         phone = request.POST.get('phone')
         address = request.POST.get('address')
+        position = request.POST.get('position')
+        
+        request.user.position = position
+        request.user.save()
 
-        return redirect('/')  
+        return redirect('dashboard')  # Redirect to landlord dashboard after onboarding
 
     return render(request, 'auth/onboarding.html')
 
 
-
-
-
-
 def index(request):
     return render(request, 'index.html')
-
-
-
-
-
-
 
 
 def signup(request):
@@ -57,15 +41,8 @@ def signup(request):
             auth_login(request, user)  # Log the user in immediately
             return redirect('onboarding')  # Redirect to onboarding page
     else:
-        return redirect('/')
+        return redirect('dashboard')
     return render(request, 'auth/register.html')
-
-
-
-
-
-
-
 
 
 def login(request):
@@ -83,18 +60,13 @@ def login(request):
                 messages.error(request, "Invalid email or password")
                 return redirect('login')
     else:
-        return redirect("/")
+        return redirect("dashboard")
     return render(request, 'auth/login.html')
-
-
-
-
 
 
 def logout_view(request):
     logout(request)
     return redirect('login')
-
 
 
 def news(request):

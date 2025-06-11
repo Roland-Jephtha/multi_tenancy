@@ -53,34 +53,28 @@ INSTALLED_APPS = [
 
 
 
-
-
-
-
-
-
-
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend', # standard django backend
     'allauth.account.auth_backends.AuthenticationBackend', # all auth backend
 ]
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'dashboard'  # Default redirect after login
 ACCOUNT_LOGOUT_REDIRECT_URL = 'login'
 ACCOUNT_SIGNUP_REDIRECT_URL = '/onboarding/'
-
-
+LOGIN_URL = 'login'
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
-
-
-
 AUTH_USER_MODEL = 'landlord.User'
 
+# Custom setting to use in your middleware
+ONBOARDING_REDIRECT_URL = '/onboarding/'
 
+# There is no built-in ACCOUNT_LOGIN_CANCELLED_REDIRECT_URL in django-allauth.
+# To handle login cancellation (e.g., user cancels social login), use SOCIALACCOUNT_LOGIN_CANCELLED_URL.
+# Example:
+SOCIALACCOUNT_LOGIN_CANCELLED_URL = 'login'
 
 
 MIDDLEWARE = [
@@ -89,6 +83,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'landlord.middleware.OnboardingMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',

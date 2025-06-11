@@ -18,7 +18,8 @@ class User(AbstractUser):
     position = models.CharField(
         max_length=20,
         choices=POSITION_CHOICES,
-        default="landlord",
+        blank=True,  # allow blank
+        null=True,   # allow null
         help_text=_("Individual's position in the system (e.g., Landlord, Tenant)."),
     )
 

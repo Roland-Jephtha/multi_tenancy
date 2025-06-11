@@ -47,4 +47,4 @@ class LandLord(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, null = True)
 
     def __str__(self):
-        return f"{self.full_name} - {self.property_address}"
+        return f"{self.user} - {self.contact_address}"

@@ -186,8 +186,8 @@
                             <img src="{% static 'assets/images/profile/avatar.jpg' %}" class="rounded-circle" width="40" height="40" alt="estate-board-img" />
                         </div>
                         <div class="john-title">
-                            <h6 class="mb-0 fs-4 fw-semibold">Dorathy</h6>
-                            <span class="fs-2">Landlord</span>
+                            <h6 class="mb-0 fs-4 fw-semibold">{{profile.user.username}}</h6>
+                            <span class="fs-2">{{profile.user.position}}</span>
                         </div>                      
                         {% if user.is_authenticated%}
                             <a class="text-danger fw-medium" href="{% url 'logout' %}">
@@ -323,10 +323,10 @@
                                                 <div class="d-flex align-items-center py-9 mx-7 border-bottom">
                                                     <img src="{% static 'assets/images/profile/avatar.jpg' %}" class="rounded-circle" width="80" height="80" alt="estate-board-img" />
                                                     <div class="ms-3">
-                                                        <h5 class="mb-1 fs-3">Dorathy Anderson</h5>
-                                                        <span class="mb-1 d-block">Landlord</span>
+                                                        <h5 class="mb-1 fs-3">{{profile.user.username}}</h5>
+                                                        <span class="mb-1 d-block">{{profile.user.position}}</span>
                                                         <p class="mb-0 d-flex align-items-center gap-2">
-                                                            <i class="ti ti-mail fs-4"></i> dorathyanderson@gmail.com
+                                                            <i class="ti ti-mail fs-4"></i> {{profile.user.email}}
                                                         </p>
                                                     </div>
                                                 </div>

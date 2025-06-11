@@ -16,6 +16,8 @@ class OnboardingMiddleware:
             allowed_paths = [
                 onboarding_url,
                 '/logout/',  # adjust if your logout URL is different
+                '/admin/',  # allow admin access
+                '/accounts/login/',  # allow login access
             ]
             # Allow access to onboarding and logout URLs
             if not getattr(request.user, 'position', None):

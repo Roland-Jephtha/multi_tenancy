@@ -49,3 +49,14 @@ def invoices(request):
     }
     
     return render(request, 'dashboard/invoices.html', context)
+
+
+def profile(request):
+    if request.user.position == 'landlord':
+        profile = LandLord.objects.get(user = request.user)
+    
+    context = {
+        'profile':profile
+    }
+    
+    return render(request, 'dashboard/profile.html', context)

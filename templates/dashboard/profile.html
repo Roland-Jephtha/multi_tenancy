@@ -1,0 +1,127 @@
+{% extends "dashboard/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+    <div class="col-12">
+        <!-- start Default Basic Forms -->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Profile</h4>
+                <p class="card-subtitle mb-3">
+                    Edit your profile information below. You can update your name, email, and other personal details.
+                </p>
+                <form class="form">
+                    <div class="mb-3 row">
+                        <label for="example-text-input" class="col-md-2 col-form-label">Username</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" value="{{ profile.user.username }}" name="username" id="example-text-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-search-input" class="col-md-2 col-form-label">Position</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" value="{{ profile.user.position }}" name="position" id="example-search-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-email-input" class="col-md-2 col-form-label">Email</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="email" value="{{ profile.user.email }}" name="email" id="example-email-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-url-input" class="col-md-2 col-form-label">Title</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" value="{{ profile.title|default:'Doctor' }}" name="title" id="example-url-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-tel-input" class="col-md-2 col-form-label">Full Name</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" value="{{ profile.full_name }}" name="full_name" id="example-tel-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-password-input" class="col-md-2 col-form-label">Phone Number</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="tel" value="{{ profile.phone_number }}" name="phone_number" id="example-password-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-number-input" class="col-md-2 col-form-label">Contact Address</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" value="{{ profile.contact_address }}" name="contact_address" id="example-number-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-datetime-local-input" class="col-md-2 col-form-label">Business | Office </label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" value="{{ profile.business_office_address_or_position }}" name="business_office_address_or_position" id="example-datetime-local-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-date-input" class="col-md-2 col-form-label">Property Address</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" value="{{ profile.property_address }}" placeholder="Plot S8-C" name="property_address" id="example-date-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-month-input" class="col-md-2 col-form-label">Year of Allocation</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="number" value="{{ profile.year_of_allocation }}" name="year_of_allocation" id="example-month-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-week-input" class="col-md-2 col-form-label">Property Status</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" value="{{ profile.property_status }}" name="property_status" id="example-week-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="formFile" class="col-md-2 col-form-label">Profile Picture</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="file" name="profile_image" id="formFile" />
+                        </div>
+                    </div>
+
+                    <!-- Hidden Fields -->
+                    <div class="hide mb-3 row">
+                        <label for="example-month-input2" class="col-md-2 col-form-label">Select</label>
+                        <div class="col-md-10">
+                            <select class="form-select" id="example-month-input2">
+                                <option selected="">Choose...</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hide mb-3 row">
+                        <label for="example-color-input" class="col-md-2 col-form-label">Color</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="color" value="#563d7c" id="example-color-input" />
+                        </div>
+                    </div>
+                    <div class="hide mb-3 row">
+                        <label for="example-color-input" class="col-md-2 col-form-label">Input Range</label>
+                        <div class="col-md-10">
+                            <input type="range" class="form-range" id="range" value="50" />
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <div class="card-body border-top  d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn bg-danger-subtle text-danger ms-6">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end Default Basic Forms -->
+    </div>
+
+{% endblock content %}

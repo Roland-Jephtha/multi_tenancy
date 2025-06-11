@@ -13,7 +13,8 @@
                 <p class="card-subtitle mb-3">
                     Edit your profile information below. You can update your name, email, and other personal details.
                 </p>
-                <form class="form">
+                <form method="post" class="myform">
+                    {% csrf_token %}
                     <div class="mb-3 row">
                         <label for="example-text-input" class="col-md-2 col-form-label">Username</label>
                         <div class="col-md-10">
@@ -114,7 +115,10 @@
 
                     <div class="form-actions">
                         <div class="card-body border-top  d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button id="submitbtn" type="submit" class="btn btn-primary">
+                                <span id="spinner" class="spinner-border spinner-border-sm me-2 d-none" role="status"></span>
+                                Save
+                            </button>
                             <button type="button" class="btn bg-danger-subtle text-danger ms-6">Cancel</button>
                         </div>
                     </div>

@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'assets/css/toastr.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/toasty.min.css' %}" />
+</head>
+<body>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="{% static 'assets/js/theme/toastr.min.js' %}"></script>
+    <script src="{% static 'assets/js/theme/toasty.min.js' %}"></script>
+    
+    <script>
+        toastr.options = {
+            "positionClass": "toast-center",
+            "closeButton": true,
+            "progressBar": false,
+            "timeOut": 10
+        };
+    </script>
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'success' in message.tags %}
+                <script type="text/javascript">toastr.success('{{ message|escapejs }}');</script>
+            {% elif 'info' in message.tags %}
+                <script type="text/javascript">toastr.info('{{ message|escapejs }}');</script>
+            {% elif 'warning' in message.tags %}
+                <script type="text/javascript">toastr.warning('{{ message|escapejs }}');</script>
+            {% elif 'error' in message.tags %}
+                <script type="text/javascript">toastr.error('{{ message|escapejs }}');</script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <style>
+        .toast-center {
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: fixed !important;
+        }
+    </style>
+
+</body>
+</html>

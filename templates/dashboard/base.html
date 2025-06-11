@@ -238,8 +238,8 @@
 
                         <div class="d-block d-lg-none py-4">
                             <a href="../main/index.html" class="text-nowrap logo-img">
-                                <img src="{% static 'assets/images/logos/logo-eb.svg' %}" class="dark-logo" alt="Logo-Dark" />
-                                <img src="{% static 'assets/images/logos/logo-eb.svg' %}" class="light-logo" alt="Logo-light" />
+                                <img src="{% static 'assets/images/logos/logo-eb-1.svg' %}" class="dark-logo" alt="Logo-Dark" />
+                                <img src="{% static 'assets/images/logos/logo-eb-1.svg' %}" class="light-logo" alt="Logo-light" />
                             </a>
                         </div>
 
@@ -1596,6 +1596,7 @@
     <script src="{% static 'assets/js/theme/theme.js' %}"></script>
     <script src="{% static 'assets/js/theme/app.min.js' %}"></script>
     <script src="{% static 'assets/js/theme/sidebarmenu.js' %}"></script>
+     <script src="{% static 'assets/js/utils.js' %}"></script>
 
     <!-- solar icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
@@ -1613,6 +1614,8 @@
     </script>
     <script src="{% static 'assets/libs/apexcharts/dist/apexcharts.min.js' %}"></script>
     <script src="{% static 'assets/js/dashboards/dashboard5.js' %}"></script>
+
+    {% include "components/toast_messages.html" %}
 </body>
 
 </html>

@@ -51,7 +51,10 @@
                                       <label for="exampleInputPassword1" class="form-label">Password</label>
                                       <input type="password" class="form-control" id="exampleInputPassword1" name = "password" required>
                                     </div>
-                                    <button class="btn btn-primary w-100 py-8 mb-4 rounded-2">Sign Up</button>
+                                    <button id="submitbtn" class="btn btn-primary w-100 py-8 mb-4 rounded-2">
+                                      <span id="spinner" class="spinner-border spinner-border-sm me-2 d-none" role="status"></span>
+                                      Sign Up
+                                    </button>
                                     <div class="d-flex align-items-center">
                                       <p class="fs-4 mb-0 text-dark">Already have an Account?</p>
                                       <a class="text-primary fw-medium ms-2" href="{% url 'login' %}">Sign In</a>

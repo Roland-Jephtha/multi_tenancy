@@ -28,7 +28,13 @@ SECRET_KEY = 'django-insecure-biob*sq$!6t3um6afjmckdn^4b&(7c9n9%c!q$41fr8a705pa@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*',
+]
+
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://2955-2a09-bac5-4dd3-1c82-00-2d7-6.ngrok-free.app",  # Allow all origins for CSRF; change in production
+# ]
 
 
 # Application definition

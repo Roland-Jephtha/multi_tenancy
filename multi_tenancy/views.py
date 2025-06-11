@@ -12,7 +12,7 @@ def onboarding(request):
         phone = request.POST.get('phone')
         address = request.POST.get('address')
         position = request.POST.get('position')
-        
+
         request.user.position = position
         request.user.save()
 
@@ -55,7 +55,7 @@ def login(request):
                 user.backend = 'django.contrib.auth.backends.ModelBackend'
                 auth_login(request, user)
                 messages.success(request, "Login successful!")
-                return redirect("/")
+                return redirect("dashboard")
             else:
                 messages.error(request, "Invalid email or password")
                 return redirect('login')

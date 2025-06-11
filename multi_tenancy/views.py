@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout
-from landlord.models import User
+from landlord.models import User, LandLord
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -9,14 +9,29 @@ from django.contrib.auth.decorators import login_required
 def onboarding(request):
     if request.method == 'POST':
         full_name = request.POST.get('full_name')
-        phone = request.POST.get('phone')
-        address = request.POST.get('address')
+        phone = request.POST.get('phone_number')
+        address = request.POST.get('contact_address')
         position = request.POST.get('position')
 
         request.user.position = position
         request.user.save()
 
-        return redirect('dashboard')  # Redirect to landlord dashboard after onboarding
+        if request.user.position == 'landlord':
+            landlord = LandLord(
+                user=request.user,
+                full_name=full_name,
+                phone_number=phone,
+                contact_address=address
+            )
+            landlord.save()
+            
+            messages.success(request, 'Onboarding completed successfully!')
+            return redirect('dashboard')
+
+        else:
+            messages.error(request, 'Only landlords can complete onboarding.')
+            return redirect('onboarding')
+
 
     return render(request, 'auth/onboarding.html')
 

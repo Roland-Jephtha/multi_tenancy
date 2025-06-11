@@ -17,7 +17,6 @@ def onboarding(request):
         request.user.save()
 
         if request.user.position == 'landlord':
-            # Create a LandLord profile if the user is a landlord
             landlord = LandLord(
                 user=request.user,
                 full_name=full_name,

@@ -12,12 +12,11 @@
     <script src="{% static 'assets/js/theme/toastr.min.js' %}"></script>
     <script src="{% static 'assets/js/theme/toasty.min.js' %}"></script>
     
-    <script>
-        toastr.options = {
+    <script>        toastr.options = {
             "positionClass": "toast-center",
             "closeButton": true,
-            "progressBar": false,
-            "timeOut": 10
+            "progressBar": true,
+            "timeOut": 5000
         };
     </script>
     {% if messages %}

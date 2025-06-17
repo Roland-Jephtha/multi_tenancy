@@ -43,6 +43,7 @@ class LandLord(models.Model):
     property_address = models.CharField(max_length=100, help_text="Write Your Plot Number in Full (e.g., Plot S8-C)", null = True)
     year_of_allocation = models.PositiveIntegerField(null = True)
     email = models.EmailField(null = True)
+    profile_image = models.ImageField(upload_to='profile_image', blank = True, null = True)
     property_status = models.CharField(max_length=100, null = True)
     timestamp = models.DateTimeField(auto_now_add=True, null = True)
 

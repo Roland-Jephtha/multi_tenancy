@@ -21,7 +21,8 @@ def onboarding(request):
                 user=request.user,
                 full_name=full_name,
                 phone_number=phone,
-                contact_address=address
+                contact_address=address,
+                email = request.user.email
             )
             landlord.save()
             

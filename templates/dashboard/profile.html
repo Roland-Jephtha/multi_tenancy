@@ -12,25 +12,25 @@
                 <h4 class="card-title">Profile</h4>
                 <p class="card-subtitle mb-3">
                     Edit your profile information below. You can update your name, email, and other personal details.
-                </p>
-                <form method="post" class="myform">
+                </p>                
+                <form method="post" class="myform" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3 row">
                         <label for="example-text-input" class="col-md-2 col-form-label">Username</label>
                         <div class="col-md-10">
-                            <input class="form-control" type="text" value="{{ profile.user.username }}" name="username" id="example-text-input" />
+                            <input class="form-control" type="text" value="{{ profile.user.username }}" name="username" id="example-text-input" readonly />
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="example-search-input" class="col-md-2 col-form-label">Position</label>
                         <div class="col-md-10">
-                            <input class="form-control" type="text" value="{{ profile.user.position }}" name="position" id="example-search-input" />
+                            <input class="form-control" type="text" value="{{ profile.user.position }}" name="position" id="example-search-input" readonly/>
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="example-email-input" class="col-md-2 col-form-label">Email</label>
                         <div class="col-md-10">
-                            <input class="form-control" type="email" value="{{ profile.user.email }}" name="email" id="example-email-input" />
+                            <input class="form-control" type="email" value="{{ profile.user.email }}" name="email" id="example-email-input"  readonly/>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -85,6 +85,10 @@
                         <label for="formFile" class="col-md-2 col-form-label">Profile Picture</label>
                         <div class="col-md-10">
                             <input class="form-control" type="file" name="profile_image" id="formFile" />
+                            {% if profile.profile_image %} <p class="mt-2"><a href="{{ profile.profile_image.url }}" target="_blank">Current Image:{{ profile.profile_image.url }}</a></p> {% endif %}
+
+
+                            
                         </div>
                     </div>
 

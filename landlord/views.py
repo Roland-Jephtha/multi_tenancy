@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import LandLord
 
 # Create your views here.
@@ -53,10 +54,33 @@ def invoices(request):
 
 def profile(request):
     if request.user.position == 'landlord':
-        profile = LandLord.objects.get(user = request.user)
+        profile = LandLord.objects.get(user=request.user)
+        
+        if request.method == 'POST':
+            # Update user fields
+            request.user.email = request.POST.get('email')
+            request.user.save()
+            
+            # Update profile fields
+            profile.title = request.POST.get('title')
+            profile.full_name = request.POST.get('full_name')
+            profile.phone_number = request.POST.get('phone_number')
+            profile.contact_address = request.POST.get('contact_address')
+            profile.business_office_address_or_position = request.POST.get('business_office_address_or_position')
+            profile.property_address = request.POST.get('property_address')
+            profile.year_of_allocation = request.POST.get('year_of_allocation')
+            profile.property_status = request.POST.get('property_status')
+            
+            # Handle profile image if uploaded
+            if request.FILES.get('profile_image'):
+                profile.profile_image = request.FILES['profile_image']
+            
+            profile.save()
+            messages.success(request, 'Profile updated successfully!')
+            return redirect('profile')
     
     context = {
-        'profile':profile
+        'profile': profile
     }
     
     return render(request, 'dashboard/profile.html', context)

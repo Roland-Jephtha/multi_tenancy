@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.template.loader import render_to_string
 from .models import LandLord
 
 # Create your views here.
@@ -8,7 +9,7 @@ from .models import LandLord
 def dashboard(request):
     if request.user.position == 'landlord':
         profile = LandLord.objects.get(user = request.user)
-    
+            
     context = {
         'profile':profile
     }
@@ -84,3 +85,37 @@ def profile(request):
     }
     
     return render(request, 'dashboard/profile.html', context)
+
+
+def news(request):
+    if request.user.position == 'landlord':
+        profile = LandLord.objects.get(user = request.user)
+    
+    context = {
+        'profile':profile
+    }
+    
+    return render(request, 'dashboard/news.html', context)
+
+
+
+def account_settings(request):
+    if request.user.position == 'landlord':
+        profile = LandLord.objects.get(user = request.user)
+    
+    context = {
+        'profile':profile
+    }
+    
+    return render(request, 'dashboard/settings.html', context)
+
+
+def estate_pass(request):
+    if request.user.position == 'landlord':
+        profile = LandLord.objects.get(user = request.user)
+    
+    context = {
+        'profile':profile
+    }
+    
+    return render(request, 'dashboard/estate-pass.html', context)

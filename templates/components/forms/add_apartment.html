@@ -1,0 +1,154 @@
+{% extends "components/full-screen-modal.html" %} 
+
+{% block modal_header %}
+    <h1>Add Apartment</h1>
+{% endblock %}
+
+
+{% block modal_body %}
+    <div class="card">
+            <div>
+                <div class="card-body">
+                    <h4 class="card-title">Apatment Info</h4>
+                    <div class="row pt-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Property Name</label>
+                                <input type="text" id="firstName" class="form-control" placeholder="John doe" />
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <input type="text" id="lastName" class="form-control form-control-danger" placeholder="Plot S1A Army Estate" />
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Property Status</label>
+                                <select class="form-select">
+                                    <option value="">Resident</option>
+                                    <option value="">Commercial</option>
+                                    <option value="">Developing</option>
+                                    <option value="">Undeveloped</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Total Floors in Building</label>
+                                <input type="number" class="form-control" />
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Property Type</label>
+                                <select class="form-select" data-placeholder="Choose a Category" tabindex="1">
+                                    <option value="Category 1">Apartment</option>
+                                    <option value="Category 2">Condo</option>
+                                    <option value="Category 3">Studio</option>
+                                    <option value="Category 4">Loft</option>
+                                    <option value="Category 4">Duplex</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Total Units in Building</label>
+                                <input type="number" class="form-control" />
+                            </div>
+                        </div>
+                        <!-- <div class="hide col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Membership</label>
+                                <div class="form-check py-1">
+                                    <input type="radio" id="customRadio11" name="customRadio" class="form-check-input" />
+                                    <label class="form-check-label" for="customRadio11">Free</label>
+                                </div>
+                                <div class="form-check py-1">
+                                    <input type="radio" id="customRadio22" name="customRadio" class="form-check-input" />
+                                    <label class="form-check-label" for="customRadio22">Paid</label>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!--/span-->
+                    </div>
+                </div>
+                <hr />
+                <div class="card-body">
+                    <!--/row-->
+                    <h4 class="card-title mb-4">Rental Info</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Special Notes to Tenant &#x24d8;</label>
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Monthly Rent (₦)</label>
+                                <input type="number" class="form-control" placeholder="1000000" />
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Security Deposit Amount (₦)</label>
+                                <input type="number" class="form-control" placeholder="200000" />
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Building Picture upload</label>
+                                <input type="file" class="form-control" />
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Lease Term Options</label>
+                                <select class="form-select">
+                                    <option>--Select your Lease Option--</option>
+                                    <option>1-year</option>
+                                    <option>Month-to-Month</option>
+                                    <option>6-month</option>
+                                    <option>other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}
+
+
+{% block modal_footer %}
+    <button type="submit" class="btn btn-primary  hstack gap-6">
+        <i class="ti ti-send fs-4"></i>
+        Submit
+    </button>
+    <button type="button" class="btn bg-danger-subtle text-danger " data-bs-dismiss="modal">
+        Close
+    </button>
+{% endblock %}
+

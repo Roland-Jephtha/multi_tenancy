@@ -89,11 +89,11 @@
                         </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{% url 'invoices' %}" aria-expanded="false">
+                            <a class="sidebar-link" href="{% url 'pass' %}" aria-expanded="false">
                                 <span>
-                                <i class="ti ti-file-text"></i>
+                                <i class="ti ti-id-badge"></i>
                                 </span>
-                                <span class="hide-menu">Invoice</span>
+                                <span class="hide-menu">Estate Pass</span>
                             </a>
                         </li>
 
@@ -115,7 +115,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="../main/page-account-settings.html" aria-expanded="false">
+                            <a class="sidebar-link" href="{% url 'settings' %}" aria-expanded="false">
                                 <span>
                                 <i class="ti ti-user-cog"></i>
                                 </span>
@@ -183,7 +183,11 @@
                 <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
                     <div class="hstack gap-3">
                         <div class="john-img">
-                            <img src="{% static 'assets/images/profile/avatar.jpg' %}" class="rounded-circle" width="40" height="40" alt="estate-board-img" />
+                            {% if profile.profile_image %}
+                                <img src="{{profile.profile_image.url}}" class="rounded-circle" width="40" height="40" alt="estate-board-img" />
+                            {% else %}
+                                <img src="{% static 'assets/images/profile/avatar.jpg' %}" class="rounded-circle" width="40" height="40" alt="estate-board-img" />
+                            {% endif %}
                         </div>
                         <div class="john-title">
                             <h6 class="mb-0 fs-4 fw-semibold">{{profile.user.username}}</h6>
@@ -220,7 +224,7 @@
                                     <i class="ti ti-menu-2"></i>
                                 </a>
                             </li>
-                            <li class="nav-item nav-icon-hover-bg rounded-circle d-none d-lg-flex">
+                            <li class="hide nav-item nav-icon-hover-bg rounded-circle d-none d-lg-flex">
                                 <a class="nav-link" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <i class="ti ti-search"></i>
                                 </a>
@@ -229,10 +233,10 @@
 
                         <ul class="navbar-nav quick-links d-none d-lg-flex align-items-center">
                             <li class="nav-item dropdown-hover d-none d-lg-block">
-                                <a class="nav-link" href="../main/app-calendar.html">Contacts</a>
+                                <a class="nav-link" href="">Contacts</a>
                             </li>
                             <li class="nav-item dropdown-hover d-none d-lg-block">
-                                <a class="nav-link" href="../main/app-email.html">Email</a>
+                                <a class="nav-link" href="">Email</a>
                             </li>
                         </ul>
 
@@ -399,7 +403,7 @@
                             <div class="offcanvas-body h-n80" data-simplebar="" data-simplebar>
                                 <ul id="sidebarnav">
                                     <li class="sidebar-item">
-                                        <a class="sidebar-link" href="../main/app-chat.html" aria-expanded="false">
+                                        <a class="sidebar-link" href="" aria-expanded="false">
                                             <span>
                                                 <i class="ti ti-address-book"></i>
                                             </span>
@@ -407,7 +411,7 @@
                                         </a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a class="sidebar-link" href="../main/app-email.html" aria-expanded="false">
+                                        <a class="sidebar-link" href="" aria-expanded="false">
                                             <span>
                                                 <i class="ti ti-mail"></i>
                                             </span>
@@ -434,7 +438,7 @@
                                     <img src="{% static 'assets/images/logos/logo-eb.svg' %}" class="light-logo" width="180" alt="estate-board-img" />
                                 </a>
                             </li>
-                            <li class="nav-item nav-icon-hover-bg rounded-circle d-none d-xl-flex">
+                            <li class="hide nav-item nav-icon-hover-bg rounded-circle d-none d-xl-flex">
                                 <a class="nav-link" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <i class="ti ti-search"></i>
                                 </a>
@@ -442,10 +446,10 @@
                         </ul>
                         <ul class="navbar-nav quick-links d-none d-xl-flex align-items-center">
                             <li class="nav-item dropdown-hover d-none d-lg-block">
-                                <a class="nav-link" href="../main/app-calendar.html">Contacts</a>
+                                <a class="nav-link" href="">Contacts</a>
                             </li>
                             <li class="nav-item dropdown-hover d-none d-lg-block">
-                                <a class="nav-link" href="../main/app-email.html">Email</a>
+                                <a class="nav-link" href="">Email</a>
                             </li>
                         </ul>
                         <div class="d-block d-xl-none">
@@ -727,8 +731,8 @@
                                     </li>
                                     <li class="sidebar-item">
                                         <a href="../main/app-invoice.html" class="sidebar-link">
-                      <i class="ti ti-file-text"></i>
-                      <span class="hide-menu">Invoice</span>
+                      <i class="ti ti-id-badge"></i>
+                      <span class="hide-menu">Estate Pass</span>
                     </a>
                                     </li>
                                     <li class="sidebar-item">
@@ -1526,7 +1530,7 @@
         </div>
 
         <!--  Search Bar -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
+        <div class="hide modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-lg">
                 <div class="modal-content rounded-1">
                     <div class="modal-header border-bottom">

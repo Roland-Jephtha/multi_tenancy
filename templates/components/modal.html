@@ -1,0 +1,34 @@
+<!-- Button trigger modal -->
+<button type="button" class="hide btn mb-1 bg-danger-subtle text-danger px-4 fs-4 " data-bs-toggle="modal" data-bs-target="#vertical-center-scroll-modal">
+    Vertically centered scrollable
+</button>
+
+<!-- Vertically centered modal -->
+ <form>
+     <div class="modal fade" id="vertical-center-scroll-modal" tabindex="-1" aria-labelledby="vertical-center-modal" aria-hidden="true">
+         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+             <div class="modal-content">
+                 <div class="modal-header d-flex align-items-center">
+                     <h4 class="modal-title" id="myLargeModalLabel">
+                         {% block modal_header %}
+                         {% endblock %}
+                     </h4>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                     {% block modal_body %}
+                     {% endblock %}
+                 </div>
+                  <div class="modal-footer d-flex justify-content-end">
+                     <button type="submit" class="btn btn-primary  hstack gap-6">
+                         <i class="ti ti-send fs-4"></i>
+                         Submit
+                     </button>
+                     <button type="button" class="btn bg-danger-subtle waves-effect text-start " data-bs-dismiss="modal">
+                         Close
+                     </button>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </form>

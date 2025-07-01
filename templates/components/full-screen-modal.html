@@ -1,0 +1,31 @@
+<!-- Button - Modal Trigger -->
+<button class="hide btn mb-1 bg-primary-subtle text-primary px-4 fs-4 " data-bs-toggle="modal" data-bs-target="#bs-fullscreen">
+    Fullscreen Modal
+</button>
+
+<!-- Modal -->
+ <form>
+     <div class="modal fade" id="bs-fullscreen" tabindex="-1" aria-labelledby="bs-example-modal-lg" aria-hidden="true">
+         <div class="modal-dialog modal-fullscreen">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
+                         {% block modal_header %}
+                         {% endblock %}
+                     </h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                     {% block modal_body %}
+                     {% endblock %}
+                 </div>
+                 <div class="modal-footer d-flex justify-content-end">
+                     {% block modal_footer %}
+                     {% endblock %}
+                 </div>
+             </div>
+             <!-- /.modal-content -->
+         </div>
+         <!-- /.modal-dialog -->
+     </div>
+ </form>

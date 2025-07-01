@@ -28462,6 +28462,22 @@ fieldset:disabled .btn {
     align-self: stretch !important
 }
 
+.justify-self-auto {
+    justify-self: auto !important;
+}
+
+.justify-self-start {
+    justify-self: start !important;
+}
+
+.justify-self-end {
+    justify-self: end !important;
+}
+
+.justify-self-center {
+    justify-self: center !important;
+}
+
 .order-first {
     order: -1 !important
 }
@@ -47036,7 +47052,7 @@ a.jp-playlist-current:before {
 }
 
 .hide {
-    display: none
+    display: none !important;
 }
 
 @media (max-width:767px) {

@@ -2,15 +2,133 @@
 
 {% load static %}
 
-
 {% block content %}
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Estate Pass</h1>
-            <p>Sorry This Feature is Currently not Available.</p>
-            <button disabled class="btn btn-primary">Download Pass</button>
+<style>
+@media print {
+  .bg-primary-subtle { background-color: rgba(29,  163,  94, 0.1) !important; }
+  .bg-success-subtle { background-color: #e6fffa !important; }
+  .bg-info-subtle    { background-color: #ebf3fe !important; }
+  .bg-danger-subtle  { background-color: #fbf2ef !important; }
+
+  body * {
+    visibility: hidden !important;
+  }
+  #estate-pass-card, #estate-pass-card * {
+    visibility: visible !important;
+  }
+  #estate-pass-card {
+    position: absolute !important;
+    left: 0; top: 0;
+    right: 0; margin: auto;
+    /* Use physical units for best print accuracy */
+    width: 95mm !important; /* ~350px at 96dpi */
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border-radius: 16px !important;
+    background: #f8fafc !important;
+    z-index: 9999;
+  }
+  html, body {
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+  }
+  .btn, .hide, .d-print-none, #print-pass-btn {
+    display: none !important;
+  }
+  #estate-pass-footer-print-center {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100%;
+  }
+}
+</style>
+
+<div class="row justify-content-center mt-5">
+  <div class="col-md-5 col-lg-4">
+    <div id="estate-pass-card" class="card shadow border-2 rounded-4 p-0 position-relative overflow-hidden" style="background: #f8fafc;">
+      <div class="p-4 pb-3">
+        <div class="d-flex mb-4">
+          <div class="me-3 flex-shrink-0">
+            {% if profile.profile_image %}
+                <img src="{{profile.profile_image.url}}" alt="Estate Pass Photo" class="rounded border fborder-2 border-primary shadow-sm" width="72" height="72" />
+            {% else %}
+                <img src="{% static 'assets/images/profile/avatar.jpg' %}" alt="Estate Pass Photo" class="rounded border fborder-2 border-primary shadow-sm" width="72" height="72" />
+            {% endif %}
+          </div>
+          <div>
+            <h5 class="fw-bold mb-1">{{ profile.full_name }}</h5>
+            <span class="badge bg-primary-subtle text-primary rounded px-2 py-2 fs-2">ID: EB-2024-001</span>
+            <div class="text-muted fs-2 mt-1">{{ profile.property_address }}</div>
+          </div>
+          <span class="ms-auto">
+            <img src="{% static 'assets/images/logos/favicon.png' %}" width="30" alt="Logo" />
+          </span>
         </div>
+        <div class="row mb-5">
+            <div class="col-6 d-flex flex-column align-items-start justify-content-between">
+              <div class="d-flex align-items-center mb-1">
+                <i class="ti ti-calendar fs-2 text-warning me-2"></i>
+                <span class="text-muted fs-2">Issued: 01 Jan 2024</span>
+              </div>
+              <div class="d-flex align-items-center mb-1">
+                <i class="ti ti-calendar fs-2 text-primary me-2"></i>
+                <span class="text-muted fs-2">Valid Till: 31 Dec 2024</span>
+              </div>
+            </div>
+            <div class="col-6 text-start d-flex flex-column align-items-end">
+                <div>
+                    <div class="mb-2">
+                        <span class="fw-semibold text-dark fs-2">Status:</span>
+                        <span class="badge bg-success-subtle text-success fs-2 rounded px-2 py-1 ms-1">Active</span>
+                    </div>
+                    <div>
+                        <span class="fw-semibold text-dark fs-2">Type:</span>
+                        <span class="badge bg-info-subtle text-info fs-2 rounded px-2 py-1 ms-1">{{profile.user.position}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-6">
+            <div class="mb-2">
+              <span class="fw-semibold text-dark fs-2">Phone:</span>
+              <span class="text-muted d-block fs-2">{{ profile.phone_number }}</span>
+            </div>
+            <div>
+              <span class="fw-semibold text-dark fs-2">Email:</span>
+              <span class="text-muted d-block fs-2">{{ profile.user.email }}</span>
+            </div>
+          </div>
+          <div class="col-6 d-flex flex-column gap-5 align-items-end">
+            <div class="w-full">
+                <img src="{% static 'assets/images/qr-code/EBJAY123.png' %}" alt="QR Code" width="100" height="100" class="border rounded bg-white shadow-sm mb-2">
+                <span class="hide text-muted fs-6">Scan for verification</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white border-top px-4 py-3">
+        <div class="d-flex align-items-center justify-content-between" id="estate-pass-footer-print-center">
+            <span style="font-size: .6rem" class="text-muted fmx-auto">
+                <i class="hide ti ti-calendar fs-1 me-1"></i>Estate Board &reg;
+            </span>
+            <button id="print-pass-btn" class="btn btn-primary fs-2 px-4" type="button">
+                <i class="ti ti-download me-2"></i>Download Pass
+            </button>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('print-pass-btn').addEventListener('click', function() {
+    window.print();
+});
+</script>
 
 {% endblock content %}

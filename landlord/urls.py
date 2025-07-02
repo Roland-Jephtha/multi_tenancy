@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import dashboard, tenants, invoices, security, profile, news, account_settings, estate_pass
+from .views import dashboard, tenants, invoices, security, profile, news, account_settings, estate_pass, dependents
 
 
 urlpatterns = [
@@ -7,6 +7,7 @@ urlpatterns = [
     path('tenants/', tenants, name='tenants'),
     path('tenants/<int:tenant_id>/', tenants, name='tenant_detail'),
     path('security/', security, name='security'),
+    path('dependents/', dependents, name='dependents'),
     path('invoices/', invoices, name='invoices'),
     path('profile/', profile, name='profile'),
     path('news/', news, name='news'),

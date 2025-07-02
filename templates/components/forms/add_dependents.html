@@ -1,0 +1,128 @@
+{% extends "components/full-screen-modal.html" %} 
+
+{% block modal_header %}
+    <h1>Add Dependent</h1>
+{% endblock %}
+
+{% block modal_body %}
+    <div class="card">
+        <div>
+            <div class="card-body">
+                <h4 class="card-title">Dependent Info</h4>
+                <div class="row pt-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" placeholder="Jane Doe" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Relationship</label>
+                            <select class="form-select">
+                                <option value="">Select Relationship</option>
+                                <option value="Spouse">Spouse</option>
+                                <option value="Child">Child</option>
+                                <option value="Parent">Parent</option>
+                                <option value="Sibling">Sibling</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" placeholder="+234..." />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" placeholder="jane@email.com" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Passport Photograph</label>
+                            <input type="file" class="form-control" accept="image/*" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">ID Type</label>
+                            <select class="form-select">
+                                <option value="">Select ID Type</option>
+                                <option value="National ID">National ID</option>
+                                <option value="Voter's Card">Voter's Card</option>
+                                <option value="Driver's License">Driver's License</option>
+                                <option value="International Passport">International Passport</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">ID Number</label>
+                            <input type="text" class="form-control" placeholder="Enter ID Number" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Additional Info</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Medical Notes / Special Needs</label>
+                                <input type="text" class="form-control" placeholder="Allergies, disabilities, etc." />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Remarks</label>
+                                <textarea class="form-control" rows="2" placeholder="Any other information"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal_footer %}
+    <button type="submit" class="btn btn-primary hstack gap-6">
+        <i class="ti ti-send fs-4"></i>
+        Submit
+    </button>
+    <button type="button" class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal">
+        Close
+    </button>
+{% endblock %}

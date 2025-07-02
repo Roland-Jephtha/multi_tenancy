@@ -1,0 +1,131 @@
+{% extends "components/full-screen-modal.html" %} 
+
+{% block modal_header %}
+    <h1>Edit Dependent</h1>
+{% endblock %}
+
+{% block modal_body %}
+    <div class="card">
+        <div>
+            <div class="card-body">
+                <h4 class="card-title">Edit Dependent Info</h4>
+                <div class="row pt-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" placeholder="Jane Doe" value="{{ dependent.full_name }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Relationship</label>
+                            <select class="form-select">
+                                <option value="">Select Relationship</option>
+                                <option value="Spouse" {% if dependent.relationship == "Spouse" %}selected{% endif %}>Spouse</option>
+                                <option value="Child" {% if dependent.relationship == "Child" %}selected{% endif %}>Child</option>
+                                <option value="Parent" {% if dependent.relationship == "Parent" %}selected{% endif %}>Parent</option>
+                                <option value="Sibling" {% if dependent.relationship == "Sibling" %}selected{% endif %}>Sibling</option>
+                                <option value="Other" {% if dependent.relationship == "Other" %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" value="{{ dependent.date_of_birth|date:'Y-m-d' }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select">
+                                <option value="">Select Gender</option>
+                                <option value="Male" {% if dependent.gender == "Male" %}selected{% endif %}>Male</option>
+                                <option value="Female" {% if dependent.gender == "Female" %}selected{% endif %}>Female</option>
+                                <option value="Other" {% if dependent.gender == "Other" %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" placeholder="+234..." value="{{ dependent.phone_number }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" placeholder="jane@email.com" value="{{ dependent.email }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Passport Photograph</label>
+                            <input type="file" class="form-control" accept="image/*">
+                            {% if dependent.passport_photo %}
+                                <img src="{{ dependent.passport_photo.url }}" alt="Passport Photo" class="mt-2 rounded" width="60">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">ID Type</label>
+                            <select class="form-select">
+                                <option value="">Select ID Type</option>
+                                <option value="National ID" {% if dependent.id_type == "National ID" %}selected{% endif %}>National ID</option>
+                                <option value="Voter's Card" {% if dependent.id_type == "Voter's Card" %}selected{% endif %}>Voter's Card</option>
+                                <option value="Driver's License" {% if dependent.id_type == "Driver's License" %}selected{% endif %}>Driver's License</option>
+                                <option value="International Passport" {% if dependent.id_type == "International Passport" %}selected{% endif %}>International Passport</option>
+                                <option value="Other" {% if dependent.id_type == "Other" %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <label class="form-label">ID Number</label>
+                            <input type="text" class="form-control" placeholder="Enter ID Number" value="{{ dependent.id_number }}">
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Additional Info</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Medical Notes / Special Needs</label>
+                                <input type="text" class="form-control" placeholder="Allergies, disabilities, etc." value="{{ dependent.medical_notes }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label">Remarks</label>
+                                <textarea class="form-control" rows="2" placeholder="Any other information">{{ dependent.remarks }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal_footer %}
+    <button type="submit" class="btn btn-primary hstack gap-6">
+        <i class="ti ti-send fs-4"></i>
+        Save Changes
+    </button>
+    <button type="button" class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal">
+        Close
+    </button>
+{% endblock %}

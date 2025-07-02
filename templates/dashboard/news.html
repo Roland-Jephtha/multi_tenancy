@@ -6,11 +6,164 @@
 {% block content %}
 
     <div class="row">
-        <div class="col-md-12">
-            <h1>News</h1>
-            <p>See All News.</p>
-            <p>Sorry This Feature is Currently not Available.</p>
-            <button disabled class="btn btn-primary">Submit News</button>
+        <div class="col-lg-6 d-flex align-items-stretch">
+            <div class="card w-100">
+                <div class="card-body">
+                    <h4 class="card-title fw-semibold">Latest News</h4>
+                    <p class="card-subtitle">Stay up to date with current happenings</p>
+                    <div class="mt-4 pb-3 border-bottom">
+                        <div class="d-flex align-items-center">
+                            <span class="bg-primary-subtle text-primary fs-1 badge">New</span>
+                            <span class="fs-2 ms-auto">8 August 2025</span>
+                        </div>
+                        <h6 class="mt-3">General Power Break</h6>
+                        <span class="fs-3 lh-sm">Power Break Scheduled for 30th August...</span>
+                        <div class="hstack fa-xs gap-3 mt-3">
+                            <a href="javascript:void(0)" class="text-muted d-flex align-items-center text-decoration-none">
+                                <i class="ti ti-user-edit text-primary me-2 d-flex"></i> Estate Management Board
+                            </a>
+                        </div>
+                    </div>
+                    <div class="py-3 border-bottom">
+                        <div class="d-flex align-items-center">
+                            <span class="bg-danger-subtle text-danger fs-1 badge">Important</span>
+                            <span class="fs-2 ms-auto">7 July 2025</span>
+                        </div>
+                        <h6 class="mt-3">Security Threat</h6>
+                        <span class="fs-3 lh-sm">An Intruder Impersonated a Security Personnel in Plot...</span>
+                        <div class="hstack fa-xs gap-3 mt-3">
+                            <a href="javascript:void(0)" class="text-muted d-flex align-items-center text-decoration-none">
+                                <i class="ti ti-user-edit text-primary me-2 d-flex"></i> Estate Management Board
+                            </a>
+                        </div>
+                    </div>
+                    <div class="pt-3">
+                        <div class="d-flex align-items-center">
+                            <span class="bg-success-subtle text-success fs-1 badge">New</span>
+                            <span class="fs-2 ms-auto">20 July 2025</span>
+                        </div>
+                        <h6 class="mt-3">House Opening</h6>
+                        <span class="fs-3 lh-sm">Plot 78B is having a house opening party...</span>
+                        <div class="hstack fa-xs gap-3 mt-3">
+                            <a href="javascript:void(0)" class="text-muted d-flex align-items-center text-decoration-none">
+                                <i class="ti ti-user-edit text-primary me-2 d-flex"></i> Robert Williams
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="{% url 'news' %}" class="btn btn-primary mt-4">See More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 d-flex align-items-stretch">
+
+            <div class="card w-100">
+                <div class="card-body">
+                    <form class="h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <h4 class="card-title">Notify Board</h4>
+                            <p class="card-subtitle mb-3">
+                                send message such as complaints, security alerts, or seek help
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea class="form-control" rows="20" placeholder="Text Here..."></textarea>
+                            <small id="textHelp" class="form-text text-muted">To: Estate Board Management</small>
+                        </div>
+
+                        <div class="d-md-flex align-items-center">
+                            <div class="mt-3 mt-md-0 ms-auto">
+                                <button type="submit" class="btn btn-primary  hstack gap-6">
+                                    <i class="ti ti-send fs-4"></i>
+                                    Send
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Statistics - HIDDEN -->
+            <div class="hide card w-100">
+                <div class="card-body border-bottom">
+                    <div class="d-md-flex align-items-center">
+                        <div>
+                            <h5 class="card-title fw-semibold">Team Performance</h5>
+                            <p class="card-subtitle">How to Measure Team Performance</p>
+                        </div>
+                        <div class="ms-auto mt-4 mt-md-0">
+                            <div class="hstack">
+                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="John Deo">
+            <img src="../assets/images/profile/user-2.jpg" class="rounded-circle border border-2 border-white" width="35" alt="u1" />
+        </a>
+                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark Smith" class="ms-n2">
+            <img src="../assets/images/profile/user-3.jpg" class="rounded-circle border border-2 border-white" width="35" alt="u2" />
+        </a>
+                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Jonthan Leo" class="ms-n2">
+            <img src="../assets/images/profile/user-4.jpg" class="rounded-circle border border-2 border-white" width="35" alt="u3" />
+        </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="hstack p-3 border rounded mb-3 mb-md-0">
+                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="John Deo">
+            <img src="../assets/images/profile/user-2.jpg" class="rounded-circle border border-2 border-white" width="30" alt="u4" />
+        </a>
+                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark Smith" class="ms-n2">
+            <img src="../assets/images/profile/user-3.jpg" class="rounded-circle border border-2 border-white" width="30" alt="u2" />
+        </a>
+                                <div class="ms-3">
+                                    <h6 class="mb-0 fs-3">Monster Dashboard</h6>
+                                    <span class="fs-2">46%</span>
+                                    <span class="fs-2 ms-4">Due in 3 days</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="hstack p-3 border rounded">
+                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="John Deo">
+            <img src="../assets/images/profile/user-4.jpg" class="rounded-circle border border-2 border-white" width="30" alt="u3" />
+        </a>
+                                <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark Smith" class="ms-n2">
+            <img src="../assets/images/profile/user-5.jpg" class="rounded-circle border border-2 border-white" width="30" alt="u4" />
+        </a>
+                                <div class="ms-3">
+                                    <h6 class="mb-0 fs-3">Xtreme Dashboard</h6>
+                                    <span class="fs-2">87%</span>
+                                    <span class="fs-2 ms-4">Due in 7 days</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div id="team-performance"></div>
+                    </div>
+                    <div class="text-center">
+                        <span class="d-block">Your team performance is 5% better this week.</span>
+                        <a href="javascript:void(0)" class="btn btn-primary mt-4">View Details</a>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <div class="hstack gap-3 justify-content-center">
+                        <div>
+                            <span>
+        <span class="round-8 text-bg-primary rounded-circle d-inline-block me-2"></span>
+                            </span>
+                            <span class="fs-3 text-dark">Completed 124</span>
+                        </div>
+                        <div>
+                            <span>
+        <span class="round-8 text-bg-danger rounded-circle d-inline-block me-2"></span>
+                            </span>
+                            <span class="fs-3 text-dark">Percentage 86%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

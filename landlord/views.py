@@ -119,3 +119,14 @@ def estate_pass(request):
     }
     
     return render(request, 'dashboard/estate-pass.html', context)
+
+
+def dependents(request):
+    if request.user.position == 'landlord':
+        profile = LandLord.objects.get(user = request.user)
+    
+    context = {
+        'profile':profile
+    }
+    
+    return render(request, 'dashboard/dependants.html', context)

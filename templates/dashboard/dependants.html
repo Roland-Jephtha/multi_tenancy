@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    {% include "components/modal-id-card.html" with modal_id="id_card" dependent=dependent profile=profile %}
+    {% include "components/forms/edit_dependent.html" with modal_id="edit_dependent" dependent=dependent %}
 
     <div class="row">
         <div class="col-12">
@@ -13,47 +13,23 @@
                 <div class="card-body">
                     <div class="d-md-flex align-items-center mb-9">
                         <div>
-                            <h4 class="card-title fw-semibold">Estate Pass</h4>
-                            <p class="card-subtitle">Check and Download your Estate Pass and that of your dependents</p>
+                            <h4 class="card-title fw-semibold">Dependents</h4>
+                            <p class="card-subtitle">Your dependents in your apartment</p>
+                        </div>
+                        <div class="ms-auto mt-4 mt-md-0">
+                            <button class="btn btn-primary d-flex justify-content-center align-items-center w-100" data-bs-toggle="modal" data-bs-target="#bs-fullscreen">
+                                <i class="ti ti-user-plus fs-4 me-2"></i>
+                                Add Dependent
+                            </button>
+                            {% include "components/forms/add_dependents.html" %}
                         </div>
                     </div>
-
                     <!-- Tab panes -->
                     <div class="tab-content mt-3">
                         <div class="tab-pane active" id="home" role="tabpanel">
                             <div class="table-responsive">
                                 <table class="table align-middle mb-0 text-nowrap">
                                     <tbody>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        {% if profile.profile_image %}
-                                                            <img src="{{profile.profile_image.url}}" alt="Estate Pass Photo" class="rounded border fborder-2 border-primary shadow-sm" width="72" height="72" />
-                                                        {% else %}
-                                                            <img src="{% static 'assets/images/profile/user-placeholder.jpg' %}" alt="Estate Pass Photo" class="rounded border fborder-2 border-primary shadow-sm" width="72" height="72" />
-                                                        {% endif %}
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">Ikpen Jonathan (You)</h6>
-                                                        <span class="fs-2">08127964509</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>Plot S1A</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAYSEC123</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <div class="btn-group" role="group" aria-label="Actions">
-                                                    <button type="button" class="btn btn-lg btn-outline-primary rounded px-3 me-3" title="Estate Pass Card" data-bs-toggle="modal" data-bs-target="#id_card">
-                                                        <i class="ti ti-id-badge"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
                                         <tr>
                                             <td class="ps-0">
                                                 <div class="d-flex align-items-center gap-3">
@@ -74,8 +50,12 @@
                                             </td>
                                             <td class="text-end ps-0">
                                                 <div class="btn-group" role="group" aria-label="Actions">
-                                                    <button type="button" class="btn btn-lg btn-outline-primary rounded px-3 me-3" title="Estate Pass Card" data-bs-toggle="modal" data-bs-target="#id_card">
-                                                        <i class="ti ti-id-badge"></i>
+                                                    <button type="button" class="btn btn-lg btn-outline-primary rounded px-3 me-3" title="Edit" data-bs-toggle="modal" data-bs-target="#edit_dependent">
+                                                        <i class="ti ti-edit"></i>
+                                                    </button>
+                                                    
+                                                    <button type="button" class="btn btn-lg btn-outline-danger rounded px-3" title="Delete">
+                                                        <i class="ti ti-trash"></i>
                                                     </button>
                                                 </div>
                                             </td>
@@ -100,8 +80,12 @@
                                             </td>
                                             <td class="text-end ps-0">
                                                 <div class="btn-group" role="group" aria-label="Actions">
-                                                    <button type="button" class="btn btn-lg btn-outline-primary rounded px-3 me-3" title="Estate Pass Card" data-bs-toggle="modal" data-bs-target="#id_card">
-                                                        <i class="ti ti-id-badge"></i>
+                                                    <button type="button" class="btn btn-lg btn-outline-primary rounded px-3 me-3" title="Edit" data-bs-toggle="modal" data-bs-target="#edit_dependent">
+                                                        <i class="ti ti-edit"></i>
+                                                    </button>
+                                                    
+                                                    <button type="button" class="btn btn-lg btn-outline-danger rounded px-3" title="Delete">
+                                                        <i class="ti ti-trash"></i>
                                                     </button>
                                                 </div>
                                             </td>
@@ -111,7 +95,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

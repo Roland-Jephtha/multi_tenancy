@@ -26,11 +26,24 @@
                         <span>Cheers, and happy activities - July 6 2024</span>
                         <div class="mt-3">
                             <div class="progress" style="height: 10px">
-                                <div class="progress-bar text-bg-primary" style="width: 75%" role="progressbar">
-                                    75%
+                                <div class="progress-bar {% if profile_completion_percentage == 100 %}text-bg-success{% elif profile_completion_percentage >= 75 %}text-bg-primary{% elif profile_completion_percentage >= 50 %}text-bg-warning{% else %}text-bg-danger{% endif %}"
+                                     style="width: {{ profile_completion_percentage }}%"
+                                     role="progressbar"
+                                     aria-valuenow="{{ profile_completion_percentage }}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100">
+                                    {{ profile_completion_percentage }}%
                                 </div>
                             </div>
-                            <a href="{% url 'profile' %}" class="fa-xs text-primary">CLICK TO COMPLETE YOUR PROFILE</a>
+                            {% if profile_completion_percentage < 100 %}
+                                <a href="{% url 'profile' %}" class="fa-xs text-primary" title="Missing: {% for field in missing_fields %}{{ field }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+                                    CLICK TO COMPLETE YOUR PROFILE ({{ missing_fields|length }} field{{ missing_fields|length|pluralize }} remaining)
+                                </a>
+                            {% else %}
+                                <span class="fa-xs text-success">
+                                    <i class="ti ti-check-circle me-1"></i>PROFILE COMPLETED
+                                </span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -97,7 +110,7 @@
                                     </span>Total Apartments
                                 </p>
                                 <!-- <h3 class=" mt-2 mb-0">₦3,350,00</h3> -->
-                                <h3 class=" mt-2 mb-0">30</h3>
+                                <h3 class=" mt-2 mb-0">{{ total_apartments|default:0 }}</h3>
                             </div>
                         </div>
                         <div class="col-md-4 border-end">
@@ -107,7 +120,7 @@
             <span class="round-8 text-bg-primary rounded-circle d-inline-block me-1"></span>
                                     </span>Occupied Apartments
                                 </p>
-                                <h3 class=" mt-2 mb-0">10</h3>
+                                <h3 class=" mt-2 mb-0">{{ occupied_apartments|default:0 }}</h3>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -117,12 +130,54 @@
             <span class="round-8 text-bg-danger rounded-circle d-inline-block me-1"></span>
                                     </span>Vacant Apartments
                                 </p>
-                                <h3 class=" mt-2 mb-0">20</h3>
+                                <h3 class=" mt-2 mb-0">{{ vacant_apartments|default:0 }}</h3>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Profile Completion Card -->
+            {% if profile_completion_percentage < 100 %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h5 class="card-title fw-semibold mb-1">Complete Your Profile</h5>
+                            <p class="card-subtitle mb-0">{{ missing_fields|length }} field{{ missing_fields|length|pluralize }} remaining</p>
+                        </div>
+                        <div class="text-end">
+                            <h3 class="fw-bold mb-0 {% if profile_completion_percentage >= 75 %}text-primary{% elif profile_completion_percentage >= 50 %}text-warning{% else %}text-danger{% endif %}">
+                                {{ profile_completion_percentage }}%
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="progress mb-3" style="height: 8px">
+                        <div class="progress-bar {% if profile_completion_percentage >= 75 %}bg-primary{% elif profile_completion_percentage >= 50 %}bg-warning{% else %}bg-danger{% endif %}"
+                             style="width: {{ profile_completion_percentage }}%"
+                             role="progressbar"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="fs-3 text-muted mb-2">Missing fields:</p>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for field in missing_fields %}
+                                    <span class="badge bg-light text-dark fs-2">{{ field }}</span>
+                                    {% if not forloop.last and forloop.counter|divisibleby:3 %}<br>{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <a href="{% url 'profile' %}" class="btn btn-primary btn-sm">
+                                <i class="ti ti-edit me-1"></i>Complete Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
         <div class="hide col-lg-5 d-flex align-items-stretch">
             <div class="card w-100">
@@ -243,103 +298,67 @@
                         <div class="tab-pane active" id="occupied" role="tabpanel">
                             <div class="table-responsive">
                                 <table class="table table-hover align-middle mb-0 text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Property Details</th>
+                                            <th>Monthly Rent</th>
+                                            <th>Property Type</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/houses/resident.jpg' %}" class="rounded" alt="p2" width="40" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">Plot S7A</h6>
-                                                        <span class="fs-2">1/1/2025</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>2020</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAY12301</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <span class="badge bg-success-subtle text-success rounded-pill">
-                    <span class="round-8 text-bg-success rounded-circle d-inline-block me-1"></span>resident
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/houses/commercial.jpeg' %}" class="rounded" alt="p1" width="40" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">Plot R6</h6>
-                                                        <span class="fs-2">5/27/2025</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>2011</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAY12302</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <span class="badge bg-warning-subtle text-warning rounded-pill">
-                    <span class="round-8 text-bg-warning rounded-circle d-inline-block me-1"></span>commercial
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/houses/undeveloped.jpg' %}" class="rounded" alt="p3" width="40" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">RB 157</h6>
-                                                        <span class="fs-2">7/20/2025</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>2024</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAY12303</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <span class="badge bg-danger-subtle text-danger rounded-pill">
-                    <span class="round-8 text-bg-danger rounded-circle d-inline-block me-1"></span>undeveloped
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/houses/developing.jpg' %}" class="rounded" alt="p4" width="40" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">WR 22A</h6>
-                                                        <span class="fs-2">8/27/2025</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>2022</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAY12304</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <span class="badge bg-info-subtle text-info rounded-pill">
-                    <span class="round-8 text-bg-info rounded-circle d-inline-block me-1"></span>developing
-                                                </span>
-                                            </td>
-                                        </tr>
+                                        {% for apartment in apartments %}
+                                            {% if apartment.is_occupied %}
+                                                <tr>
+                                                    <td class="ps-0">
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <div class="flex-shrink-0">
+                                                                {% if apartment.building_picture %}
+                                                                    <img src="{{ apartment.building_picture.url }}" class="rounded" alt="{{ apartment.property_name }}" width="40" />
+                                                                {% else %}
+                                                                    <img src="{% static 'assets/images/houses/resident.jpg' %}" class="rounded" alt="{{ apartment.property_name }}" width="40" />
+                                                                {% endif %}
+                                                            </div>
+                                                            <div>
+                                                                <h6 class="mb-0 fw-semibold">{{ apartment.property_name }}</h6>
+                                                                <span class="fs-2">{{ apartment.created_at|date:"m/d/Y" }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="ps-0">
+                                                        <span>₦{{ apartment.monthly_rent|floatformat:0 }}</span>
+                                                    </td>
+                                                    <td class="ps-0">
+                                                        <h6 class="mb-0">{{ apartment.property_type|title }}</h6>
+                                                    </td>
+                                                    <td class="text-end ps-0">
+                                                        {% if apartment.property_status == 'resident' %}
+                                                            <span class="badge bg-success-subtle text-success rounded-pill">
+                                                                <span class="round-8 text-bg-success rounded-circle d-inline-block me-1"></span>{{ apartment.property_status|title }}
+                                                            </span>
+                                                        {% elif apartment.property_status == 'commercial' %}
+                                                            <span class="badge bg-warning-subtle text-warning rounded-pill">
+                                                                <span class="round-8 text-bg-warning rounded-circle d-inline-block me-1"></span>{{ apartment.property_status|title }}
+                                                            </span>
+                                                        {% elif apartment.property_status == 'developing' %}
+                                                            <span class="badge bg-info-subtle text-info rounded-pill">
+                                                                <span class="round-8 text-bg-info rounded-circle d-inline-block me-1"></span>{{ apartment.property_status|title }}
+                                                            </span>
+                                                        {% else %}
+                                                            <span class="badge bg-danger-subtle text-danger rounded-pill">
+                                                                <span class="round-8 text-bg-danger rounded-circle d-inline-block me-1"></span>{{ apartment.property_status|title }}
+                                                            </span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="4" class="text-center py-4">
+                                                    <p class="mb-0">No occupied apartments found.</p>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -347,103 +366,67 @@
                         <div class="tab-pane" id="unoccupied" role="tabpanel">
                             <div class="table-responsive">
                                 <table class="table table-hover align-middle mb-0 text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Property Details</th>
+                                            <th>Monthly Rent</th>
+                                            <th>Property Type</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/houses/resident.jpg' %}" class="rounded" alt="p4" width="40" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">Plot R38</h6>
-                                                        <span class="fs-2">10/1/2025</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>2014</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAY12305</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <a href="javascript:void(0)" class="badge bg-success-subtle text-success rounded-pill">
-                    <span class="round-8 text-bg-success rounded-circle d-inline-block me-1"></span>resident
-                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/houses/commercial.jpeg' %}" class="rounded" alt="p1" width="40" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">WR 36</h6>
-                                                        <span class="fs-2">5/04/2025</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>2021</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAY12306</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <span class="badge bg-warning-subtle text-warning rounded-pill">
-                    <span class="round-8 text-bg-warning rounded-circle d-inline-block me-1"></span>commercial
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/houses/resident.jpg' %}" class="rounded" alt="p2" width="40" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">Plot F5</h6>
-                                                        <span class="fs-2">7/25/2025</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>2011</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAY12307</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <span class="badge bg-success-subtle text-success rounded-pill">
-                    <span class="round-8 text-bg-success rounded-circle d-inline-block me-1"></span>resident
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/houses/undeveloped.jpg' %}" class="rounded" alt="p3" width="40" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">Plot WR-237A</h6>
-                                                        <span class="fs-2">9/5/2025</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>2024</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAY12308</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <span class="badge bg-danger-subtle text-danger rounded-pill">
-                    <span class="round-8 text-bg-danger rounded-circle d-inline-block me-1"></span>undeveloped
-                                                </span>
-                                            </td>
-                                        </tr>
+                                        {% for apartment in apartments %}
+                                            {% if not apartment.is_occupied %}
+                                                <tr>
+                                                    <td class="ps-0">
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <div class="flex-shrink-0">
+                                                                {% if apartment.building_picture %}
+                                                                    <img src="{{ apartment.building_picture.url }}" class="rounded" alt="{{ apartment.property_name }}" width="40" />
+                                                                {% else %}
+                                                                    <img src="{% static 'assets/images/houses/resident.jpg' %}" class="rounded" alt="{{ apartment.property_name }}" width="40" />
+                                                                {% endif %}
+                                                            </div>
+                                                            <div>
+                                                                <h6 class="mb-0 fw-semibold">{{ apartment.property_name }}</h6>
+                                                                <span class="fs-2">{{ apartment.created_at|date:"m/d/Y" }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="ps-0">
+                                                        <span>₦{{ apartment.monthly_rent|floatformat:0 }}</span>
+                                                    </td>
+                                                    <td class="ps-0">
+                                                        <h6 class="mb-0">{{ apartment.property_type|title }}</h6>
+                                                    </td>
+                                                    <td class="text-end ps-0">
+                                                        {% if apartment.property_status == 'resident' %}
+                                                            <span class="badge bg-success-subtle text-success rounded-pill">
+                                                                <span class="round-8 text-bg-success rounded-circle d-inline-block me-1"></span>{{ apartment.property_status|title }}
+                                                            </span>
+                                                        {% elif apartment.property_status == 'commercial' %}
+                                                            <span class="badge bg-warning-subtle text-warning rounded-pill">
+                                                                <span class="round-8 text-bg-warning rounded-circle d-inline-block me-1"></span>{{ apartment.property_status|title }}
+                                                            </span>
+                                                        {% elif apartment.property_status == 'developing' %}
+                                                            <span class="badge bg-info-subtle text-info rounded-pill">
+                                                                <span class="round-8 text-bg-info rounded-circle d-inline-block me-1"></span>{{ apartment.property_status|title }}
+                                                            </span>
+                                                        {% else %}
+                                                            <span class="badge bg-danger-subtle text-danger rounded-pill">
+                                                                <span class="round-8 text-bg-danger rounded-circle d-inline-block me-1"></span>{{ apartment.property_status|title }}
+                                                            </span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="4" class="text-center py-4">
+                                                    <p class="mb-0">No vacant apartments found.</p>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>

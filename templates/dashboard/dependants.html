@@ -5,8 +5,6 @@
 
 {% block content %}
 
-    {% include "components/forms/edit_dependent.html" with modal_id="edit_dependent" dependent=dependent %}
-
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -29,67 +27,64 @@
                         <div class="tab-pane active" id="home" role="tabpanel">
                             <div class="table-responsive">
                                 <table class="table align-middle mb-0 text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Dependent Details</th>
+                                            <th>Relationship</th>
+                                            <th>Dependent ID</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/profile/user-5.jpg' %}" class="rounded" alt="p1" width="80" />
+                                        {% for dependent in dependents %}
+                                            <tr>
+                                                <td class="ps-0">
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <div class="flex-shrink-0">
+                                                            {% if dependent.passport_photo %}
+                                                                <img src="{{ dependent.passport_photo.url }}" class="rounded" alt="{{ dependent.full_name }}" width="80" />
+                                                            {% else %}
+                                                                <img src="{% static 'assets/images/profile/user-placeholder.jpg' %}" class="rounded" alt="{{ dependent.full_name }}" width="80" />
+                                                            {% endif %}
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-0 fw-semibold">{{ dependent.full_name }}</h6>
+                                                            <span class="fs-2">{{ dependent.phone_number|default:"No phone" }}</span>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">Irpun Jane</h6>
-                                                        <span class="fs-2">081029939030</span>
+                                                </td>
+                                                <td class="ps-0">
+                                                    <span class="badge bg-primary-subtle text-primary rounded-pill">{{ dependent.get_relationship_display }}</span>
+                                                </td>
+                                                <td class="ps-0">
+                                                    <h6 class="mb-0">EBJAYSEC{{ dependent.id|stringformat:"05d" }}</h6>
+                                                </td>
+                                                <td class="text-end ps-0">
+                                                    <div class="btn-group" role="group" aria-label="Actions">
+                                                        <button type="button" class="btn btn-lg btn-outline-primary rounded px-3 me-3" title="Edit"
+                                                                data-bs-toggle="modal" data-bs-target="#editDependentModal"
+                                                                onclick="populateEditForm({{ dependent.id }}, '{{ dependent.full_name|escapejs }}', '{{ dependent.relationship }}', '{{ dependent.date_of_birth|date:'Y-m-d' }}', '{{ dependent.gender }}', '{{ dependent.phone_number|default:'' }}', '{{ dependent.email|default:'' }}', '{{ dependent.id_type }}', '{{ dependent.id_number }}', '{{ dependent.medical_notes|default:'' }}', '{{ dependent.remarks|default:'' }}')">
+                                                            <i class="ti ti-edit"></i>
+                                                        </button>
+
+                                                        <form method="post" action="{% url 'delete_dependent' dependent.id %}" style="display: inline;"
+                                                              onsubmit="return confirm('Are you sure you want to delete {{ dependent.full_name }}?');">
+                                                            {% csrf_token %}
+                                                            <button type="submit" class="btn btn-lg btn-outline-danger rounded px-3" title="Delete">
+                                                                <i class="ti ti-trash"></i>
+                                                            </button>
+                                                        </form>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>Plot S7A</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAYSEC12301</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <div class="btn-group" role="group" aria-label="Actions">
-                                                    <button type="button" class="btn btn-lg btn-outline-primary rounded px-3 me-3" title="Edit" data-bs-toggle="modal" data-bs-target="#edit_dependent">
-                                                        <i class="ti ti-edit"></i>
-                                                    </button>
-                                                    
-                                                    <button type="button" class="btn btn-lg btn-outline-danger rounded px-3" title="Delete">
-                                                        <i class="ti ti-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="flex-shrink-0">
-                                                        <img src="{% static 'assets/images/profile/user-placeholder.jpg' %}" class="rounded" alt="p1" width="80" />
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="mb-0 fw-semibold">Mohammed Yusuf</h6>
-                                                        <span class="fs-2">08105739030</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="ps-0">
-                                                <span>Plot R38</span>
-                                            </td>
-                                            <td class="ps-0">
-                                                <h6 class="mb-0">EBJAYSEC12302</h6>
-                                            </td>
-                                            <td class="text-end ps-0">
-                                                <div class="btn-group" role="group" aria-label="Actions">
-                                                    <button type="button" class="btn btn-lg btn-outline-primary rounded px-3 me-3" title="Edit" data-bs-toggle="modal" data-bs-target="#edit_dependent">
-                                                        <i class="ti ti-edit"></i>
-                                                    </button>
-                                                    
-                                                    <button type="button" class="btn btn-lg btn-outline-danger rounded px-3" title="Delete">
-                                                        <i class="ti ti-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="4" class="text-center py-4">
+                                                    <p class="mb-0">No dependents found. <a href="#" data-bs-toggle="modal" data-bs-target="#bs-fullscreen">Add your first dependent</a>.</p>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -99,5 +94,162 @@
             </div>
         </div>
     </div>
+
+    <!-- Single Edit Modal -->
+    <div class="modal fade" id="editDependentModal" tabindex="-1" aria-labelledby="editDependentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4" id="editDependentModalLabel">
+                        <h1>Edit Dependent</h1>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="" enctype="multipart/form-data" id="editDependentForm">
+                        {% csrf_token %}
+                        <div class="card">
+                            <div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Edit Dependent Info</h4>
+                                    <div class="row pt-3">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Full Name</label>
+                                                <input type="text" name="full_name" id="edit_full_name" class="form-control" placeholder="Jane Doe" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Relationship</label>
+                                                <select name="relationship" id="edit_relationship" class="form-select" required>
+                                                    <option value="">Select Relationship</option>
+                                                    <option value="spouse">Spouse</option>
+                                                    <option value="child">Child</option>
+                                                    <option value="parent">Parent</option>
+                                                    <option value="sibling">Sibling</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Date of Birth</label>
+                                                <input type="date" name="date_of_birth" id="edit_date_of_birth" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Gender</label>
+                                                <select name="gender" id="edit_gender" class="form-select" required>
+                                                    <option value="">Select Gender</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Phone Number</label>
+                                                <input type="tel" name="phone_number" id="edit_phone_number" class="form-control" placeholder="+234...">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Email Address</label>
+                                                <input type="email" name="email" id="edit_email" class="form-control" placeholder="jane@email.com">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Passport Photograph</label>
+                                                <input type="file" name="passport_photo" class="form-control" accept="image/*">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">ID Type</label>
+                                                <select name="id_type" id="edit_id_type" class="form-select" required>
+                                                    <option value="">Select ID Type</option>
+                                                    <option value="national_id">National ID</option>
+                                                    <option value="voters_card">Voter's Card</option>
+                                                    <option value="drivers_license">Driver's License</option>
+                                                    <option value="international_passport">International Passport</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">ID Number</label>
+                                                <input type="text" name="id_number" id="edit_id_number" class="form-control" placeholder="Enter ID Number" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Additional Info</h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Medical Notes / Special Needs</label>
+                                                    <input type="text" name="medical_notes" id="edit_medical_notes" class="form-control" placeholder="Allergies, disabilities, etc.">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Remarks</label>
+                                                    <textarea name="remarks" id="edit_remarks" class="form-control" rows="2" placeholder="Any other information"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-end">
+                    <button type="submit" form="editDependentForm" class="btn btn-primary hstack gap-6">
+                        <i class="ti ti-send fs-4"></i>
+                        Save Changes
+                    </button>
+                    <button type="button" class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function populateEditForm(id, fullName, relationship, dateOfBirth, gender, phoneNumber, email, idType, idNumber, medicalNotes, remarks) {
+        // Set the form action URL
+        document.getElementById('editDependentForm').action = '/landlord/edit-dependent/' + id + '/';
+
+        // Populate form fields
+        document.getElementById('edit_full_name').value = fullName;
+        document.getElementById('edit_relationship').value = relationship;
+        document.getElementById('edit_date_of_birth').value = dateOfBirth;
+        document.getElementById('edit_gender').value = gender;
+        document.getElementById('edit_phone_number').value = phoneNumber;
+        document.getElementById('edit_email').value = email;
+        document.getElementById('edit_id_type').value = idType;
+        document.getElementById('edit_id_number').value = idNumber;
+        document.getElementById('edit_medical_notes').value = medicalNotes;
+        document.getElementById('edit_remarks').value = remarks;
+    }
+    </script>
 
 {% endblock content %}

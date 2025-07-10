@@ -1,74 +1,81 @@
-{% extends "components/full-screen-modal.html" %} 
-
-{% block modal_header %}
-    <h1>Add Apartment</h1>
-{% endblock %}
-
-
-{% block modal_body %}
-    <div class="card">
-            <div>
-                <div class="card-body">
-                    <h4 class="card-title">Apatment Info</h4>
-                    <div class="row pt-3">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Property Name</label>
-                                <input type="text" id="firstName" class="form-control" placeholder="John doe" />
+<!-- Modal -->
+<div class="modal fade" id="bs-fullscreen" tabindex="-1" aria-labelledby="bs-example-modal-lg" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
+                    <h1>Add Apartment</h1>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+    <form method="post" action="{% url 'add_apartment' %}" enctype="multipart/form-data" id="apartmentForm">
+        {% csrf_token %}
+        <div class="card">
+                <div>
+                    <div class="card-body">
+                        <h4 class="card-title">Apartment Info</h4>
+                        <div class="row pt-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Property Name</label>
+                                    <input type="text" name="property_name" class="form-control" placeholder="Enter property name" required />
+                                </div>
                             </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Address</label>
-                                <input type="text" id="lastName" class="form-control form-control-danger" placeholder="Plot S1A Army Estate" />
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" name="address" class="form-control" placeholder="Plot S1A Army Estate" required />
+                                </div>
                             </div>
+                            <!--/span-->
                         </div>
-                        <!--/span-->
-                    </div>
-                    <!--/row-->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Property Status</label>
-                                <select class="form-select">
-                                    <option value="">Resident</option>
-                                    <option value="">Commercial</option>
-                                    <option value="">Developing</option>
-                                    <option value="">Undeveloped</option>
-                                </select>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Property Status</label>
+                                    <select name="property_status" class="form-select" required>
+                                        <option value="">--Select Property Status--</option>
+                                        <option value="resident">Resident</option>
+                                        <option value="commercial">Commercial</option>
+                                        <option value="developing">Developing</option>
+                                        <option value="undeveloped">Undeveloped</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Total Floors in Building</label>
-                                <input type="number" class="form-control" />
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Total Floors in Building</label>
+                                    <input type="number" name="total_floors" class="form-control" min="1" required />
+                                </div>
                             </div>
+                            <!--/span-->
                         </div>
-                        <!--/span-->
-                    </div>
-                    <!--/row-->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Property Type</label>
-                                <select class="form-select" data-placeholder="Choose a Category" tabindex="1">
-                                    <option value="Category 1">Apartment</option>
-                                    <option value="Category 2">Condo</option>
-                                    <option value="Category 3">Studio</option>
-                                    <option value="Category 4">Loft</option>
-                                    <option value="Category 4">Duplex</option>
-                                </select>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Property Type</label>
+                                    <select name="property_type" class="form-select" required>
+                                        <option value="">--Select Property Type--</option>
+                                        <option value="apartment">Apartment</option>
+                                        <option value="condo">Condo</option>
+                                        <option value="studio">Studio</option>
+                                        <option value="loft">Loft</option>
+                                        <option value="duplex">Duplex</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Total Units in Building</label>
-                                <input type="number" class="form-control" />
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Total Units in Building</label>
+                                    <input type="number" name="total_units" class="form-control" min="1" required />
+                                </div>
                             </div>
-                        </div>
                         <!-- <div class="hide col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Membership</label>
@@ -89,66 +96,69 @@
                 <div class="card-body">
                     <!--/row-->
                     <h4 class="card-title mb-4">Rental Info</h4>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mb-3">
-                                <label class="form-label">Special Notes to Tenant &#x24d8;</label>
-                                <input type="text" class="form-control" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Special Notes to Tenant &#x24d8;</label>
+                                    <textarea name="special_notes" class="form-control" rows="3" placeholder="Enter any special notes for tenants"></textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Monthly Rent (₦)</label>
-                                <input type="number" class="form-control" placeholder="1000000" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Monthly Rent (₦)</label>
+                                    <input type="number" name="monthly_rent" class="form-control" placeholder="1000000" step="0.01" min="0" required />
+                                </div>
                             </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Security Deposit Amount (₦)</label>
-                                <input type="number" class="form-control" placeholder="200000" />
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Security Deposit Amount (₦)</label>
+                                    <input type="number" name="security_deposit" class="form-control" placeholder="200000" step="0.01" min="0" required />
+                                </div>
                             </div>
+                            <!--/span-->
                         </div>
-                        <!--/span-->
-                    </div>
-                    <!--/row-->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Building Picture upload</label>
-                                <input type="file" class="form-control" />
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Building Picture upload</label>
+                                    <input type="file" name="building_picture" class="form-control" accept="image/*" />
+                                </div>
                             </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Lease Term Options</label>
-                                <select class="form-select">
-                                    <option>--Select your Lease Option--</option>
-                                    <option>1-year</option>
-                                    <option>Month-to-Month</option>
-                                    <option>6-month</option>
-                                    <option>other</option>
-                                </select>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Lease Term Options</label>
+                                    <select name="lease_term" class="form-select" required>
+                                        <option value="">--Select your Lease Option--</option>
+                                        <option value="1-year">1-year</option>
+                                        <option value="month-to-month">Month-to-Month</option>
+                                        <option value="6-month">6-month</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
                             </div>
+                            <!--/span-->
                         </div>
-                        <!--/span-->
                     </div>
                 </div>
+                </div>
             </div>
+            <div class="modal-footer d-flex justify-content-end">
+                <button type="submit" form="apartmentForm" class="btn btn-primary hstack gap-6">
+                    <i class="ti ti-send fs-4"></i>
+                    Submit
+                </button>
+                <button type="button" class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
     </div>
-{% endblock %}
-
-
-{% block modal_footer %}
-    <button type="submit" class="btn btn-primary  hstack gap-6">
-        <i class="ti ti-send fs-4"></i>
-        Submit
-    </button>
-    <button type="button" class="btn bg-danger-subtle text-danger " data-bs-dismiss="modal">
-        Close
-    </button>
-{% endblock %}
+    <!-- /.modal-dialog -->
+</div>
 

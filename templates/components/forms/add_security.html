@@ -1,138 +1,151 @@
-{% extends "components/full-screen-modal.html" %} 
-
-{% block modal_header %}
-    <h1>Add Security Person</h1>
-{% endblock %}
-
-
-{% block modal_body %}
-    <div class="card">
-        <div>
-            <div class="card-body">
-                <h4 class="card-title">Person Info</h4>
-                <div class="row pt-3">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">First Name</label>
-                            <input type="text" id="firstName" class="form-control" placeholder="John" />
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Last Name</label>
-                            <input type="text" id="lastName" class="form-control form-control-danger" placeholder="Aku" />
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-                <!--/row-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3 has-success">
-                            <label class="form-label">Gender</label>
-                            <select class="form-select">
-                                <option value="">Male</option>
-                                <option value="">Female</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Date of Birth</label>
-                            <input type="date" class="form-control" />
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-                <!--/row-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Contact Number</label>
-                            <input type="tel" class="form-control" value="(234)-812-000-0000">
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Residential Address</label>
-                            <input type="text" id="address" class="form-control form-control-danger" placeholder="" />
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
+<!-- Modal -->
+<div class="modal fade" id="bs-fullscreen" tabindex="-1" aria-labelledby="bs-example-modal-lg" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
+                    <h1>Add Security Person</h1>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <hr />
-            <div class="card-body">
-                <!--/row-->
-                <h4 class="card-title mb-4">Employment Details</h4>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="mb-3">
-                            <label class="form-label">Any Government ID</label>
-                            <input type="file" class="form-control" />
+            <div class="modal-body">
+                <form method="post" action="{% url 'add_security' %}" enctype="multipart/form-data" id="securityForm">
+                    {% csrf_token %}
+                    <div class="card">
+                        <div>
+                            <div class="card-body">
+                                <h4 class="card-title">Person Info</h4>
+                                <div class="row pt-3">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">First Name</label>
+                                            <input type="text" name="first_name" class="form-control" placeholder="John" required />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Last Name</label>
+                                            <input type="text" name="last_name" class="form-control" placeholder="Aku" required />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Gender</label>
+                                            <select name="gender" class="form-select" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Date of Birth</label>
+                                            <input type="date" name="date_of_birth" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Contact Number</label>
+                                            <input type="tel" name="phone_number" class="form-control" placeholder="(234)-812-000-0000" required>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Residential Address</label>
+                                            <textarea name="residential_address" class="form-control" placeholder="Enter full address" required></textarea>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="card-body">
+                                <!--/row-->
+                                <h4 class="card-title mb-4">Employment Details</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Any Government ID</label>
+                                            <input type="file" name="government_id" class="form-control" accept=".pdf,.jpg,.jpeg,.png" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Position/Role</label>
+                                            <select name="position" class="form-select" required>
+                                                <option value="">--Select the position--</option>
+                                                <option value="security_guard">Security Guard</option>
+                                                <option value="patrol_officer">Patrol Officer</option>
+                                                <option value="cctv_monitor">CCTV Monitor</option>
+                                                <option value="supervisor">Security Supervisor</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Employment Type</label>
+                                            <select name="employment_type" class="form-select" required>
+                                                <option value="">--Select the employment type--</option>
+                                                <option value="full_time">Full-time</option>
+                                                <option value="part_time">Part-time</option>
+                                                <option value="contract">Contract</option>
+                                                <option value="temporary">Temporary</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Joining Date</label>
+                                            <input type="date" name="joining_date" class="form-control" required />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Upload Picture</label>
+                                            <input type="file" name="profile_picture" class="form-control" accept="image/*" />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Position/Role</label>
-                            <select class="form-select">
-                                <option>--Select the position--</option>
-                                <option>Security Guard</option>
-                                <option>Patrol Officer</option>
-                                <option>CCTV Monitor</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Employment Type</label>
-                            <select class="form-select">
-                                <option>--Select the employment type--</option>
-                                <option>Full-time</option>
-                                <option>Part-time</option>
-                                <option>Contract</option>
-                                <option>Temporary</option>
-                            </select>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-                <!--/row-->
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Joining Date</label>
-                            <input type="date" class="form-control" />
-                        </div>
-                    </div>
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Upload Picture</label>
-                            <input type="file" class="form-control" />
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-end">
+                <button type="submit" form="securityForm" class="btn btn-primary hstack gap-6">
+                    <i class="ti ti-send fs-4"></i>
+                    Submit
+                </button>
+                <button type="button" class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
+        <!-- /.modal-content -->
     </div>
-{% endblock %}
-
-
-{% block modal_footer %}
-    <button type="submit" class="btn btn-primary  hstack gap-6">
-        <i class="ti ti-send fs-4"></i>
-        Submit
-    </button>
-    <button type="button" class="btn bg-danger-subtle text-danger " data-bs-dismiss="modal">
-        Close
-    </button>
-{% endblock %}
+    <!-- /.modal-dialog -->
+</div>
 

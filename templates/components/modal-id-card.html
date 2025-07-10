@@ -59,16 +59,12 @@
                             <div class="p-4 pb-3">
                                 <div class="d-flex mb-4">
                                 <div class="me-3 flex-shrink-0">
-                                    {% if profile.profile_image %}
-                                        <img src="{{profile.profile_image.url}}" alt="Estate Pass Photo" class="rounded border fborder-2 border-primary shadow-sm" width="72" height="72" />
-                                    {% else %}
-                                        <img src="{% static 'assets/images/profile/avatar.jpg' %}" alt="Estate Pass Photo" class="rounded border fborder-2 border-primary shadow-sm" width="72" height="72" />
-                                    {% endif %}
+                                    <img id="pass-photo" src="{% static 'assets/images/profile/avatar.jpg' %}" alt="Estate Pass Photo" class="rounded border fborder-2 border-primary shadow-sm" width="72" height="72" />
                                 </div>
                                 <div>
-                                    <h5 class="fw-bold mb-1">{{ profile.full_name }}</h5>
-                                    <span class="badge bg-primary-subtle text-primary rounded px-2 py-2 fs-2">ID: EB-2024-001</span>
-                                    <div class="text-muted fs-2 mt-1">{{ profile.property_address }}</div>
+                                    <h5 id="pass-name" class="fw-bold mb-1">{{ profile.full_name|default:"Name" }}</h5>
+                                    <span id="pass-id" class="badge bg-primary-subtle text-primary rounded px-2 py-2 fs-2">ID: EBJAY00001</span>
+                                    <div id="pass-address" class="text-muted fs-2 mt-1">{{ profile.property_address|default:"Address" }}</div>
                                 </div>
                                 <span class="ms-auto">
                                     <img src="{% static 'assets/images/logos/favicon.png' %}" width="30" alt="Logo" />
@@ -78,11 +74,11 @@
                                     <div class="col-6 d-flex flex-column align-items-start justify-content-between">
                                     <div class="d-flex align-items-center mb-1">
                                         <i class="ti ti-calendar fs-2 text-warning me-2"></i>
-                                        <span class="text-muted fs-2">Issued: 01 Jan 2024</span>
+                                        <span class="text-muted fs-2">Issued: <span id="pass-issued-date">01 Jan 2025</span></span>
                                     </div>
                                     <div class="d-flex align-items-center mb-1">
                                         <i class="ti ti-calendar fs-2 text-primary me-2"></i>
-                                        <span class="text-muted fs-2">Valid Till: 31 Dec 2024</span>
+                                        <span class="text-muted fs-2">Valid Till: <span id="pass-valid-date">31 Dec 2025</span></span>
                                     </div>
                                     </div>
                                     <div class="col-6 text-start d-flex flex-column align-items-end">
@@ -93,7 +89,7 @@
                                             </div>
                                             <div>
                                                 <span class="fw-semibold text-dark fs-2">Type:</span>
-                                                <span class="badge bg-info-subtle text-info fs-2 rounded px-2 py-1 ms-1">{{profile.user.position}}</span>
+                                                <span id="pass-type" class="badge bg-info-subtle text-info fs-2 rounded px-2 py-1 ms-1">Landlord</span>
                                             </div>
                                         </div>
                                     </div>
@@ -102,16 +98,16 @@
                                 <div class="col-6">
                                     <div class="mb-2">
                                     <span class="fw-semibold text-dark fs-2">Phone:</span>
-                                    <span class="text-muted d-block fs-2">{{ profile.phone_number }}</span>
+                                    <span id="pass-phone" class="text-muted d-block fs-2">{{ profile.phone_number|default:"Not provided" }}</span>
                                     </div>
                                     <div>
                                     <span class="fw-semibold text-dark fs-2">Email:</span>
-                                    <span class="text-muted d-block fs-2">{{ profile.user.email }}</span>
+                                    <span id="pass-email" class="text-muted d-block fs-2">{{ profile.user.email|default:"Not provided" }}</span>
                                     </div>
                                 </div>
                                 <div class="col-6 d-flex flex-column gap-5 align-items-end">
                                     <div class="w-full">
-                                        <img src="{% static 'assets/images/qr-code/EBJAY123.png' %}" alt="QR Code" width="100" height="100" class="border rounded bg-white shadow-sm mb-2">
+                                        <img id="pass-qr" src="{% static 'assets/images/qr-code/EBJAY123.png' %}" alt="QR Code" width="100" height="100" class="border rounded bg-white shadow-sm mb-2">
                                         <span class="hide text-muted fs-6">Scan for verification</span>
                                     </div>
                                 </div>
@@ -133,15 +129,8 @@
 
                 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
                 <script>
-                    document.getElementById('download-pass-btn').addEventListener('click', function() {
-                        var card = document.getElementById('estate-pass-card');
-                        html2canvas(card, {backgroundColor: null}).then(function(canvas) {
-                            var link = document.createElement('a');
-                            link.download = 'estate-pass.png';
-                            link.href = canvas.toDataURL('image/png');
-                            link.click();
-                        });
-                    });
+                    // Download functionality will be set by the showEstatePass function
+                    // This ensures the filename matches the person's name
                 </script>
             </div>
         </div>

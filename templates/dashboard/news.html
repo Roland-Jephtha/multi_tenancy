@@ -9,50 +9,65 @@
         <div class="col-lg-6 d-flex align-items-stretch">
             <div class="card w-100">
                 <div class="card-body">
-                    <h4 class="card-title fw-semibold">Latest News</h4>
-                    <p class="card-subtitle">Stay up to date with current happenings</p>
-                    <div class="mt-4 pb-3 border-bottom">
-                        <div class="d-flex align-items-center">
-                            <span class="bg-primary-subtle text-primary fs-1 badge">New</span>
-                            <span class="fs-2 ms-auto">8 August 2025</span>
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h4 class="card-title fw-semibold">Latest News</h4>
+                            <p class="card-subtitle">Stay up to date with current happenings</p>
                         </div>
-                        <h6 class="mt-3">General Power Break</h6>
-                        <span class="fs-3 lh-sm">Power Break Scheduled for 30th August...</span>
-                        <div class="hstack fa-xs gap-3 mt-3">
-                            <a href="javascript:void(0)" class="text-muted d-flex align-items-center text-decoration-none">
-                                <i class="ti ti-user-edit text-primary me-2 d-flex"></i> Estate Management Board
-                            </a>
-                        </div>
+                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addNewsModal">
+                            <i class="ti ti-plus"></i> Add News
+                        </button>
                     </div>
-                    <div class="py-3 border-bottom">
-                        <div class="d-flex align-items-center">
-                            <span class="bg-danger-subtle text-danger fs-1 badge">Important</span>
-                            <span class="fs-2 ms-auto">7 July 2025</span>
+
+                    {% for news_item in latest_news %}
+                        <div class="{% if not forloop.last %}pb-3 border-bottom{% else %}pt-3{% endif %} {% if not forloop.first %}py-3{% else %}mt-4{% endif %}">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <span class="{{ news_item.priority_badge_class }} fs-1 badge">{{ news_item.priority_display_text }}</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="fs-2">{{ news_item.created_at|date:"d M Y" }}</span>
+                                    {% if news_item.author == profile %}
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                                <i class="ti ti-dots-vertical"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#" onclick="editNews({{ news_item.id }}, '{{ news_item.title|escapejs }}', '{{ news_item.content|escapejs }}', '{{ news_item.excerpt|escapejs }}', '{{ news_item.priority }}', '{{ news_item.category }}', {{ news_item.is_published|yesno:'true,false' }})" data-bs-toggle="modal" data-bs-target="#editNewsModal">Edit</a></li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <form method="post" action="{% url 'delete_news' news_item.id %}" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this news article?');">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="dropdown-item text-danger">Delete</button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <h6 class="mt-3">{{ news_item.title }}</h6>
+                            <span class="fs-3 lh-sm">{{ news_item.excerpt }}</span>
+                            <div class="hstack fa-xs gap-3 mt-3">
+                                <a href="javascript:void(0)" class="text-muted d-flex align-items-center text-decoration-none">
+                                    <i class="ti ti-user-edit text-primary me-2 d-flex"></i> {{ news_item.author.full_name|default:news_item.author.user.username }}
+                                </a>
+                                <span class="badge bg-secondary-subtle text-secondary">{{ news_item.get_category_display }}</span>
+                            </div>
                         </div>
-                        <h6 class="mt-3">Security Threat</h6>
-                        <span class="fs-3 lh-sm">An Intruder Impersonated a Security Personnel in Plot...</span>
-                        <div class="hstack fa-xs gap-3 mt-3">
-                            <a href="javascript:void(0)" class="text-muted d-flex align-items-center text-decoration-none">
-                                <i class="ti ti-user-edit text-primary me-2 d-flex"></i> Estate Management Board
-                            </a>
+                    {% empty %}
+                        <div class="text-center py-4">
+                            <p class="text-muted">No news articles available.</p>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewsModal">
+                                <i class="ti ti-plus"></i> Add First News Article
+                            </button>
                         </div>
-                    </div>
-                    <div class="pt-3">
-                        <div class="d-flex align-items-center">
-                            <span class="bg-success-subtle text-success fs-1 badge">New</span>
-                            <span class="fs-2 ms-auto">20 July 2025</span>
+                    {% endfor %}
+
+                    {% if latest_news %}
+                        <div class="text-center">
+                            {% comment %} <a href="{% url 'view_notifications' %}" class="btn btn-outline-primary mt-4">View All News & Notifications</a> {% endcomment %}
+                            <a href="" class="btn btn-outline-primary mt-4">View All News & Notifications</a>
                         </div>
-                        <h6 class="mt-3">House Opening</h6>
-                        <span class="fs-3 lh-sm">Plot 78B is having a house opening party...</span>
-                        <div class="hstack fa-xs gap-3 mt-3">
-                            <a href="javascript:void(0)" class="text-muted d-flex align-items-center text-decoration-none">
-                                <i class="ti ti-user-edit text-primary me-2 d-flex"></i> Robert Williams
-                            </a>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <a href="{% url 'news' %}" class="btn btn-primary mt-4">See More</a>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -60,28 +75,63 @@
 
             <div class="card w-100">
                 <div class="card-body">
-                    <form class="h-100 d-flex flex-column justify-content-between">
+                    <form method="post" action="{% url 'news' %}" class="h-100 d-flex flex-column justify-content-between">
+                        {% csrf_token %}
                         <div>
                             <h4 class="card-title">Notify Board</h4>
                             <p class="card-subtitle mb-3">
-                                send message such as complaints, security alerts, or seek help
+                                Send message such as complaints, security alerts, or seek help
                             </p>
                         </div>
 
                         <div class="form-group">
-                            <textarea class="form-control" rows="20" placeholder="Text Here..."></textarea>
+                            <div class="mb-3">
+                                <label class="form-label">Message Type</label>
+                                <select name="notification_type" class="form-select" required>
+                                    <option value="general">General</option>
+                                    <option value="complaint">Complaint</option>
+                                    <option value="security_alert">Security Alert</option>
+                                    <option value="help_request">Help Request</option>
+                                    <option value="suggestion">Suggestion</option>
+                                    <option value="maintenance_request">Maintenance Request</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Subject (Optional)</label>
+                                <input type="text" name="subject" class="form-control" placeholder="Brief subject line">
+                            </div>
+                            <textarea name="message" class="form-control" rows="15" placeholder="Type your message here..." required></textarea>
                             <small id="textHelp" class="form-text text-muted">To: Estate Board Management</small>
                         </div>
 
                         <div class="d-md-flex align-items-center">
                             <div class="mt-3 mt-md-0 ms-auto">
-                                <button type="submit" class="btn btn-primary  hstack gap-6">
+                                <button type="submit" class="btn btn-primary hstack gap-6">
                                     <i class="ti ti-send fs-4"></i>
                                     Send
                                 </button>
                             </div>
                         </div>
                     </form>
+
+                    <!-- Recent Notifications Status -->
+                    {% if user_notifications %}
+                        <div class="mt-4 pt-3 border-top">
+                            <h6 class="mb-3">Your Recent Messages</h6>
+                            {% for notification in user_notifications %}
+                                <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
+                                    <div>
+                                        <small class="text-muted">{{ notification.get_notification_type_display }}</small>
+                                        <p class="mb-0 fs-3">{{ notification.subject|default:notification.message|truncatechars:50 }}</p>
+                                    </div>
+                                    <span class="badge {{ notification.status_badge_class }}">{{ notification.get_status_display }}</span>
+                                </div>
+                            {% endfor %}
+                            <div class="text-center mt-3">
+                                <a href="{% url 'view_notifications' %}" class="btn btn-sm btn-outline-primary">View All Messages</a>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 
@@ -166,5 +216,158 @@
             </div>
         </div>
     </div>
+
+    <!-- Add News Modal -->
+    <div class="modal fade" id="addNewsModal" tabindex="-1" aria-labelledby="addNewsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewsModalLabel">Add News Article</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="{% url 'add_news' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="title" class="form-control" placeholder="Enter news title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Excerpt</label>
+                            <input type="text" name="excerpt" class="form-control" placeholder="Brief summary (max 300 characters)" maxlength="300" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Priority</label>
+                                    <select name="priority" class="form-select">
+                                        <option value="normal">Normal</option>
+                                        <option value="low">Low</option>
+                                        <option value="high">High</option>
+                                        <option value="urgent">Urgent</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select name="category" class="form-select">
+                                        <option value="general">General</option>
+                                        <option value="security">Security</option>
+                                        <option value="maintenance">Maintenance</option>
+                                        <option value="event">Event</option>
+                                        <option value="announcement">Announcement</option>
+                                        <option value="emergency">Emergency</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea name="content" class="form-control" rows="6" placeholder="Enter full news content" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Featured Image</label>
+                            <input type="file" name="featured_image" class="form-control" accept="image/*">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="is_published" id="is_published" checked>
+                            <label class="form-check-label" for="is_published">
+                                Publish immediately
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add News</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit News Modal -->
+    <div class="modal fade" id="editNewsModal" tabindex="-1" aria-labelledby="editNewsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editNewsModalLabel">Edit News Article</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="" enctype="multipart/form-data" id="editNewsForm">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="title" id="edit_news_title" class="form-control" placeholder="Enter news title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Excerpt</label>
+                            <input type="text" name="excerpt" id="edit_news_excerpt" class="form-control" placeholder="Brief summary (max 300 characters)" maxlength="300" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Priority</label>
+                                    <select name="priority" id="edit_news_priority" class="form-select">
+                                        <option value="normal">Normal</option>
+                                        <option value="low">Low</option>
+                                        <option value="high">High</option>
+                                        <option value="urgent">Urgent</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select name="category" id="edit_news_category" class="form-select">
+                                        <option value="general">General</option>
+                                        <option value="security">Security</option>
+                                        <option value="maintenance">Maintenance</option>
+                                        <option value="event">Event</option>
+                                        <option value="announcement">Announcement</option>
+                                        <option value="emergency">Emergency</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea name="content" id="edit_news_content" class="form-control" rows="6" placeholder="Enter full news content" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Featured Image</label>
+                            <input type="file" name="featured_image" class="form-control" accept="image/*">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="is_published" id="edit_is_published">
+                            <label class="form-check-label" for="edit_is_published">
+                                Publish immediately
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function editNews(id, title, content, excerpt, priority, category, isPublished) {
+        // Set the form action URL
+        document.getElementById('editNewsForm').action = '/landlord/edit-news/' + id + '/';
+
+        // Populate form fields
+        document.getElementById('edit_news_title').value = title;
+        document.getElementById('edit_news_excerpt').value = excerpt;
+        document.getElementById('edit_news_content').value = content;
+        document.getElementById('edit_news_priority').value = priority;
+        document.getElementById('edit_news_category').value = category;
+        document.getElementById('edit_is_published').checked = isPublished;
+    }
+    </script>
 
 {% endblock content %}

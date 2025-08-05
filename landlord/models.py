@@ -160,7 +160,7 @@ class Apartment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.property_name} - {self.address}"
+        return f"{self.property_name} - {self.address}--> {self.landlord}"
 
     class Meta:
         ordering = ['-created_at']

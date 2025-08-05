@@ -35,7 +35,7 @@
                                     {{ profile_completion_percentage }}%
                                 </div>
                             </div>
-                            {% comment %} {% if profile_completion_percentage < 100 %}
+                            {% if profile_completion_percentage < 100 %}
                                 <a href="{% url 'profile' %}" class="fa-xs text-primary" title="Missing: {% for field in missing_fields %}{{ field }}{% if not forloop.last %}, {% endif %}{% endfor %}">
                                     CLICK TO COMPLETE YOUR PROFILE ({{ missing_fields|length }} field{{ missing_fields|length|pluralize }} remaining)
                                 </a>
@@ -43,7 +43,7 @@
                                 <span class="fa-xs text-success">
                                     <i class="ti ti-check-circle me-1"></i>PROFILE COMPLETED
                                 </span>
-                            {% endif %} {% endcomment %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -137,47 +137,7 @@
                 </div>
             </div>
 
-            <!-- Profile Completion Card -->
-            {% if profile_completion_percentage < 100 %}
-            <div class="card mt-4">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <div>
-                            <h5 class="card-title fw-semibold mb-1">Complete Your Profile</h5>
-                            <p class="card-subtitle mb-0">{{ missing_fields|length }} field{{ missing_fields|length|pluralize }} remaining</p>
-                        </div>
-                        <div class="text-end">
-                            <h3 class="fw-bold mb-0 {% if profile_completion_percentage >= 75 %}text-primary{% elif profile_completion_percentage >= 50 %}text-warning{% else %}text-danger{% endif %}">
-                                {{ profile_completion_percentage }}%
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="progress mb-3" style="height: 8px">
-                        <div class="progress-bar {% if profile_completion_percentage >= 75 %}bg-primary{% elif profile_completion_percentage >= 50 %}bg-warning{% else %}bg-danger{% endif %}"
-                             style="width: {{ profile_completion_percentage }}%"
-                             role="progressbar"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-8">
-                            <p class="fs-3 text-muted mb-2">Missing fields:</p>
-                            <div class="d-flex flex-wrap gap-1">
-                                {% for field in missing_fields %}
-                                    <span class="badge bg-light text-dark fs-2">{{ field }}</span>
-                                    {% if not forloop.last and forloop.counter|divisibleby:3 %}<br>{% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-end">
-                            <a href="{% url 'profile' %}" class="btn btn-primary btn-sm">
-                                <i class="ti ti-edit me-1"></i>Complete Profile
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+        
         </div>
         <div class="hide col-lg-5 d-flex align-items-stretch">
             <div class="card w-100">

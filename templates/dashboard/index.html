@@ -35,7 +35,7 @@
                                     {{ profile_completion_percentage }}%
                                 </div>
                             </div>
-                            {% if profile_completion_percentage < 100 %}
+                            {% comment %} {% if profile_completion_percentage < 100 %}
                                 <a href="{% url 'profile' %}" class="fa-xs text-primary" title="Missing: {% for field in missing_fields %}{{ field }}{% if not forloop.last %}, {% endif %}{% endfor %}">
                                     CLICK TO COMPLETE YOUR PROFILE ({{ missing_fields|length }} field{{ missing_fields|length|pluralize }} remaining)
                                 </a>
@@ -43,7 +43,7 @@
                                 <span class="fa-xs text-success">
                                     <i class="ti ti-check-circle me-1"></i>PROFILE COMPLETED
                                 </span>
-                            {% endif %}
+                            {% endif %} {% endcomment %}
                         </div>
                     </div>
                 </div>

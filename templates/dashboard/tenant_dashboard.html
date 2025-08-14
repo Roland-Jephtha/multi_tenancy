@@ -1,0 +1,385 @@
+{% extends "dashboard/base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+
+    <div class="row">
+
+        {% comment %} New Tenant Signup - This shows first and hides after selection {% endcomment %}
+            <div class="col-12 hide">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-md-flex align-items-center mb-9">
+                            <div>
+                                <h4 class="card-title fw-semibold">Welcome Jonathan,</h4>
+                                <p class="card-subtitle">To begin, please select an apartment / property available for rent below</p>
+                            </div>
+                        </div>
+                        <!-- Apartment panes -->
+                        <div class="row mt-3">
+                            
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <img class="card-img-top img-responsive" src="{% static 'assets/images/houses/resident.jpg' %}" alt="Card image cap" />
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="d-flex align-items-center fs-2">
+                                                <i class="ti ti-calendar me-1 fs-2"></i> 20 May
+                                                2024
+                                            </span>
+                                            <div class="ms-auto badge bg-success-subtle text-success">
+                                                <a href="javascript:void(0)" class="d-flex align-items-center fs-2 text-success">
+                                                    Resident
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <h4 class="card-title">
+                                            Featured Hydroflora Pots Garden &amp; Outdoors
+                                        </h4>
+                                        <p class="mb-0 card-subtitle">
+                                            Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper quam.
+                                        </p>
+                                        <div class="text-end">
+                                            <button class="btn btn-primary mt-3" type="button" title="Open"
+                                                data-bs-toggle="modal" data-bs-target="#openApartmentModal"
+                                                onclick="">
+                                                See Details
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <img class="card-img-top img-responsive" src="{% static 'assets/images/houses/resident.jpg' %}" alt="Card image cap" />
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="d-flex align-items-center fs-2">
+                                                <i class="ti ti-calendar me-1 fs-2"></i> 20 May
+                                                2024
+                                            </span>
+                                            <div class="ms-auto badge bg-success-subtle text-success">
+                                                <a href="javascript:void(0)" class="d-flex align-items-center fs-2 text-success">
+                                                    Resident
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <h4 class="card-title">
+                                            Featured Hydroflora Pots Garden &amp; Outdoors
+                                        </h4>
+                                        <p class="mb-0 card-subtitle">
+                                            Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper quam.
+                                        </p>
+                                        <div class="text-end">
+                                            <button class="btn btn-primary mt-3" type="button" title="Open"
+                                                data-bs-toggle="modal" data-bs-target="#openApartmentModal"
+                                                onclick="">
+                                                See Details
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% comment %} End of New Tenant Signup {% endcomment %}
+
+
+        {% comment %} Tenant Dashboard Content After Selecting Apartment (New Tenant Signup) Above {% endcomment %}
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-between row gx-0 mb-4 mb-md-0">
+                    <div class="col-md-auto d-flex align-items-center gap-4 mb-4">
+                        <div class="position-relative">
+                            <div class="border border-2 border-primary rounded-circle">
+                                {% if profile.profile_image %}
+                                        <img src="{{profile.profile_image.url}}" class="rounded-circle m-1" width="60" alt="user image" />
+                                {% else %}
+                                        <img src="{% static 'assets/images/profile/avatar.jpg' %}" class="rounded-circle m-1" width="60" alt="user image" />
+                                {% endif %}
+                            </div>
+                            <span class="hide position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-primary"> 3
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="fw-semibold">{{profile.user.username}}</span></h3>
+                            <span>Cheers, and happy activities - July 6 2024</span>
+                            <div class="mt-3">
+                                <div class="progress" style="height: 10px">
+                                    <div class="progress-bar {% if profile_completion_percentage == 100 %}text-bg-success{% elif profile_completion_percentage >= 75 %}text-bg-primary{% elif profile_completion_percentage >= 50 %}text-bg-warning{% else %}text-bg-danger{% endif %}"
+                                        style="width: {{ profile_completion_percentage }}%"
+                                        role="progressbar"
+                                        aria-valuenow="{{ profile_completion_percentage }}"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
+                                        {{ profile_completion_percentage }}%
+                                    </div>
+                                </div>
+                                {% if profile_completion_percentage < 100 %}
+                                    <a href="{% url 'profile' %}" class="fa-xs text-primary" title="Missing: {% for field in missing_fields %}{{ field }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+                                        CLICK TO COMPLETE YOUR PROFILE ({{ missing_fields|length }} field{{ missing_fields|length|pluralize }} remaining)
+                                    </a>
+                                {% else %}
+                                    <span class="fa-xs text-success">
+                                        <i class="ti ti-check-circle me-1"></i>PROFILE COMPLETED
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                
+                <div class="hide card">
+                    <div class="border-top">
+                        <div class="row gx-0">
+                            <div class="col-md-4 border-end">
+                                <div class="p-4 py-3 py-md-4">
+                                    <p class="fs-4 text-info mb-0">
+                                        <span class="text-info">
+                                            <span class="round-8 text-bg-info rounded-circle d-inline-block me-1"></span>
+                                        </span>Monthly Rent
+                                    </p>
+                                    <!-- <h3 class=" mt-2 mb-0">₦3,350,00</h3> -->
+                                    <h3 class=" mt-2 mb-0">{{ total_apartments|default:0 }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-4 border-end">
+                                <div class="p-4 py-3 py-md-4">
+                                    <p class="fs-4 text-primary mb-0">
+                                        <span class="text-primary">
+                                            <span class="round-8 text-bg-primary rounded-circle d-inline-block me-1"></span>
+                                        </span>Dependents
+                                    </p>
+                                    <h3 class=" mt-2 mb-0">{{ occupied_apartments|default:0 }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-4 py-3 py-md-4">
+                                    <p class="fs-4 text-danger mb-0">
+                                        <span class="text-danger">
+                                            <span class="round-8 text-bg-danger rounded-circle d-inline-block me-1"></span>
+                                        </span>Lease Term
+                                    </p>
+                                    <h3 class=" mt-2 mb-0">{{ vacant_apartments|default:0 }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fcol-12 col-lg-7 d-flex align-items-stretch">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                <img src="{% static 'assets/images/houses/resident.jpg' %}" alt="Apartment Picture" class="img-fluid rounded-3 border" style="max-height: 400px;">
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="fw-bold mb-2">Featured Hydroflora Pots Garden &amp; Outdoors</h4>
+                                <div class="mb-2">
+                                    <span class="badge bg-success-subtle text-success fs-2 px-3 py-2">Resident</span>
+                                    <span class="badge bg-primary-subtle text-primary fs-2 px-3 py-2 ms-2">Apartment</span>
+                                </div>
+                                <div class="mb-2">
+                                    <i class="ti ti-map-pin me-1"></i>
+                                    <span class="text-muted">Plot S1A Army Estate</span>
+                                </div>
+                                <div class="mb-2">
+                                    <i class="ti ti-building me-1"></i>
+                                    <span class="text-muted">Floors: 3 | Units: 12</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="mb-2">
+                                    <span class="fw-semibold">Monthly Rent:</span>
+                                    <span class="text-primary">₦1,000,000</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="fw-semibold">Security Deposit:</span>
+                                    <span class="text-primary">₦200,000</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="fw-semibold">Lease Term:</span>
+                                    <span class="text-muted">1-year</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-2">
+                                    <span class="fw-semibold">Status:</span>
+                                    <span class="badge bg-success-subtle fs-2 text-success px-2 py-1">Active</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="fw-semibold">Type:</span>
+                                    <span class="badge bg-info-subtle fs-2 text-info px-2 py-1">Residential</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="mb-2">
+                                    <span class="fw-semibold">Special Notes to Tenant:</span>
+                                    <span class="text-muted">Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper quam.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 d-flex align-items-stretch">
+                <div class="card w-100">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold">Recent Activity</h5>
+                        <p class="card-subtitle">View All Recent and Upcoming Activity</p>
+                        <div class="mt-9 py-6 d-flex align-items-center">
+                            <div class="flex-shrink-0 bg-primary-subtle text-primary rounded-circle round d-flex align-items-center justify-content-center">
+                                <i class="ti ti-map-pin fs-6"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0 fw-semibold">House Warming Party</h6>
+                                <span class="fs-3">on Plot5A</span>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="fs-2">12:00 AM</span>
+                            </div>
+                        </div>
+                        <div class="py-6 d-flex align-items-center">
+                            <div class="flex-shrink-0 bg-danger-subtle text-danger rounded-circle round d-flex align-items-center justify-content-center">
+                                <i class="ti ti-bell-exclamation fs-6"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0 fw-semibold">Security Alert</h6>
+                                <span class="fs-3">on Plot 12B</span>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="fs-2">3:52 PM</span>
+                            </div>
+                        </div>
+                        <div class="py-6 d-flex align-items-center">
+                            <div class="flex-shrink-0 bg-success-subtle text-success rounded-circle round d-flex align-items-center justify-content-center">
+                                <i class="ti ti-microphone fs-6"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0 fw-semibold">General Estate Meeting</h6>
+                                <span class="fs-3">on 12/08/2025</span>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="fs-2">4:50 PM</span>
+                            </div>
+                        </div>
+                        <div class="pt-6 d-flex align-items-center">
+                            <div class="flex-shrink-0 bg-info-subtle text-info rounded-circle round d-flex align-items-center justify-content-center">
+                                <i class="ti ti-mail fs-6"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h6 class="mb-0 fw-semibold">Private Message from Estate Board</h6>
+                                <span class="fs-3">treat as urgent pls</span>
+                            </div>
+                            <div class="ms-auto">
+                                <span class="fs-2">6:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% comment %} End of Tenant Dashboard Content {% endcomment %}
+
+    </div>
+
+    <!-- Edit Apartment Modal -->
+    <div class="modal fade" id="openApartmentModal" tabindex="-1" aria-labelledby="bs-example-modal-lg" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
+                        <span class="fw-bold">Apartment Details</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card border-0 shadow rounded-4">
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                    <img src="{% static 'assets/images/houses/resident.jpg' %}" alt="Apartment Picture" class="img-fluid rounded-3 border" style="max-height: 400px;">
+                                </div>
+                                <div class="col-md-6">
+                                    <h3 class="fw-bold mb-2">Featured Hydroflora Pots Garden &amp; Outdoors</h3>
+                                    <div class="mb-2">
+                                        <span class="badge bg-success-subtle text-success fs-6 px-3 py-2">Resident</span>
+                                        <span class="badge bg-primary-subtle text-primary fs-6 px-3 py-2 ms-2">Apartment</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <i class="ti ti-map-pin me-1"></i>
+                                        <span class="text-muted">Plot S1A Army Estate</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <i class="ti ti-building me-1"></i>
+                                        <span class="text-muted">Floors: 3 | Units: 12</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="mb-2">
+                                        <span class="fw-semibold">Monthly Rent:</span>
+                                        <span class="text-primary">₦1,000,000</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="fw-semibold">Security Deposit:</span>
+                                        <span class="text-primary">₦200,000</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="fw-semibold">Lease Term:</span>
+                                        <span class="text-muted">1-year</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-2">
+                                        <span class="fw-semibold">Status:</span>
+                                        <span class="badge bg-success-subtle text-success px-2 py-1">Active</span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="fw-semibold">Type:</span>
+                                        <span class="badge bg-info-subtle text-info px-2 py-1">Residential</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="mb-2">
+                                        <span class="fw-semibold">Special Notes to Tenant:</span>
+                                        <span class="text-muted">Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper quam.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-end">
+                    <button type="submit" form="apartmentForm" class="btn btn-primary hstack gap-6">
+                        <i class="ti ti-send fs-4"></i>
+                        Select
+                    </button>
+                    <button type="button" class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+

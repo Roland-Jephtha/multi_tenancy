@@ -264,6 +264,7 @@
                                             <th>Monthly Rent</th>
                                             <th>Property Type</th>
                                             <th>Status</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -310,6 +311,14 @@
                                                             </span>
                                                         {% endif %}
                                                     </td>
+                                                    <td>
+                                                        <!-- Edit Button -->
+                                                        <button type="button" class="btn btn-sm btn-outline-primary rounded px-2 me-2" title="Edit"
+                                                                data-bs-toggle="modal" data-bs-target="#editApartmentModal"
+                                                                onclick="">
+                                                            <i class="ti ti-edit"></i>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             {% endif %}
                                         {% empty %}
@@ -332,6 +341,7 @@
                                             <th>Monthly Rent</th>
                                             <th>Property Type</th>
                                             <th>Status</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -378,6 +388,14 @@
                                                             </span>
                                                         {% endif %}
                                                     </td>
+                                                    <td>
+                                                        <!-- Edit Button -->
+                                                        <button type="button" class="btn btn-sm btn-outline-primary rounded px-2 me-2" title="Edit"
+                                                                data-bs-toggle="modal" data-bs-target="#editApartmentModal"
+                                                                onclick="">
+                                                            <i class="ti ti-edit"></i>
+                                                        </button>
+                                                    </td>
                                                 </tr>
                                             {% endif %}
                                         {% empty %}
@@ -395,6 +413,173 @@
                 </div>
             </div>
         </div>
+    </div>
+
+
+
+
+    <!-- Edit Apartment Modal -->
+    <div class="modal fade" id="editApartmentModal" tabindex="-1" aria-labelledby="bs-example-modal-lg" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
+                        <h1>Edit Apartment</h1>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form method="post" action="" enctype="multipart/form-data" id="apartmentForm">
+                    {% csrf_token %}
+                    <div class="card">
+                        <div>
+                            <div class="card-body">
+                                <h4 class="card-title">Apartment Info</h4>
+                                <div class="row pt-3">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Property Name</label>
+                                            <input type="text" name="property_name" class="form-control" placeholder="Enter property name" required />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Address</label>
+                                            <input type="text" name="address" class="form-control" placeholder="Plot S1A Army Estate" required />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Property Status</label>
+                                            <select name="property_status" class="form-select" required>
+                                                <option value="">--Select Property Status--</option>
+                                                <option value="resident">Resident</option>
+                                                <option value="commercial">Commercial</option>
+                                                <option value="developing">Developing</option>
+                                                <option value="undeveloped">Undeveloped</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Total Floors in Building</label>
+                                            <input type="number" name="total_floors" class="form-control" min="1" required />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Property Type</label>
+                                            <select name="property_type" class="form-select" required>
+                                                <option value="">--Select Property Type--</option>
+                                                <option value="apartment">Apartment</option>
+                                                <option value="condo">Condo</option>
+                                                <option value="studio">Studio</option>
+                                                <option value="loft">Loft</option>
+                                                <option value="duplex">Duplex</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Total Units in Building</label>
+                                            <input type="number" name="total_units" class="form-control" min="1" required />
+                                        </div>
+                                    </div>
+                                <!-- <div class="hide col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Membership</label>
+                                        <div class="form-check py-1">
+                                            <input type="radio" id="customRadio11" name="customRadio" class="form-check-input" />
+                                            <label class="form-check-label" for="customRadio11">Free</label>
+                                        </div>
+                                        <div class="form-check py-1">
+                                            <input type="radio" id="customRadio22" name="customRadio" class="form-check-input" />
+                                            <label class="form-check-label" for="customRadio22">Paid</label>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!--/span-->
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="card-body">
+                            <!--/row-->
+                            <h4 class="card-title mb-4">Rental Info</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Special Notes to Tenant &#x24d8;</label>
+                                            <textarea name="special_notes" class="form-control" rows="3" placeholder="Enter any special notes for tenants"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Monthly Rent (₦)</label>
+                                            <input type="number" name="monthly_rent" class="form-control" placeholder="1000000" step="0.01" min="0" required />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Security Deposit Amount (₦)</label>
+                                            <input type="number" name="security_deposit" class="form-control" placeholder="200000" step="0.01" min="0" required />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Building Picture upload</label>
+                                            <input type="file" name="building_picture" class="form-control" accept="image/*" />
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">Lease Term Options</label>
+                                            <select name="lease_term" class="form-select" required>
+                                                <option value="">--Select your Lease Option--</option>
+                                                <option value="1-year">1-year</option>
+                                                <option value="month-to-month">Month-to-Month</option>
+                                                <option value="6-month">6-month</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-end">
+                        <button type="submit" form="apartmentForm" class="btn btn-primary hstack gap-6">
+                            <i class="ti ti-send fs-4"></i>
+                            Submit
+                        </button>
+                        <button type="button" class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
     </div>
 
 {% endblock content %}

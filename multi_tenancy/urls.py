@@ -13,6 +13,7 @@ urlpatterns = [
     path('onboarding/', onboarding, name='onboarding'),
     path("logout/", logout_view, name="logout"),
     path('landlord/', include('landlord.urls')),
+    path('tenant/', include('tenant.urls')),
     path('accounts/', include('allauth.urls')),
 ]
 

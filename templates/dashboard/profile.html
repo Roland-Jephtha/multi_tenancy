@@ -56,12 +56,24 @@
                             <input class="form-control" required type="text" value="{{ profile.contact_address }}" name="contact_address" id="example-number-input" />
                         </div>
                     </div>
+
+
+
+
+
+
+
+                    {% if request.user.position == 'landlord' %}
                     <div class="mb-3 row">
                         <label for="example-datetime-local-input" class="col-md-2 col-form-label">Business | Office </label>
                         <div class="col-md-10">
                             <input class="form-control" required type="text" value="{{ profile.business_office_address_or_position }}" name="business_office_address_or_position" id="example-datetime-local-input" />
                         </div>
                     </div>
+
+
+
+
                     <div class="mb-3 row">
                         <label for="example-date-input" class="col-md-2 col-form-label">Property Address</label>
                         <div class="col-md-10">
@@ -80,6 +92,37 @@
                             <input class="form-control" required type="text" value="{{ profile.property_status }}" name="property_status" id="example-week-input" />
                         </div>
                     </div>
+
+
+                    {% else %}
+
+
+
+
+                    <div class="mb-3 row">
+                        <label for="example-date-input" class="col-md-2 col-form-label">Property Occupied</label>
+                        <div class="col-md-10">
+                            <input class="form-control" required type="text" value="{{ profile.property_occupied }}" placeholder="Plot S8-C" name="property_occupied" id="example-date-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="example-month-input" class="col-md-2 col-form-label">Date of Tenancy</label>
+                        <div class="col-md-10">
+
+                            <input type="date"  class="form-control" value="{{ profile.date_of_tenancy }}" name="date_of_tenancy" id="example-month-input" />
+
+
+                        </div>
+                    </div>
+            
+
+
+                    {% endif %}
+
+
+
+
+
                     <div class="mb-3 row">
                         <label for="formFile" class="col-md-2 col-form-label">Profile Picture</label>
                         <div class="col-md-10">

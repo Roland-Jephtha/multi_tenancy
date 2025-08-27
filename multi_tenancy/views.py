@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from landlord.models import User, LandLord
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from tenant.models import Tenant
+
 
 
 @login_required
@@ -13,10 +15,11 @@ def onboarding(request):
         address = request.POST.get('contact_address')
         position = request.POST.get('position')
 
-        request.user.position = position
-        request.user.save()
 
-        if request.user.position == 'landlord':
+
+        if position == 'landlord':
+            request.user.position = position
+            request.user.save()
             landlord = LandLord(
                 user=request.user,
                 full_name=full_name,
@@ -29,9 +32,21 @@ def onboarding(request):
             messages.success(request, 'Onboarding completed successfully!')
             return redirect('dashboard')
 
-        else:
-            messages.error(request, 'Only landlords can complete onboarding.')
-            return redirect('onboarding')
+
+
+        elif request.user.position == 'tenant':
+            request.user.position = position
+            request.user.save()
+            tenant = Tenant(
+                user=request.user,
+                full_name=full_name,
+                phone_number=phone,
+                contact_address=address,
+                email = request.user.email
+            )
+            tenant.save()
+
+            return redirect('tenant-dashboard')
 
 
     return render(request, 'auth/onboarding.html')

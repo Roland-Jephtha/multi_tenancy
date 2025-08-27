@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from .models import LandLord, Apartment, Dependent, Security, News, BoardNotification
+from tenant.models import Tenant, Dependent as TenantDependent
 
 # Create your views here.
 @login_required
@@ -81,6 +82,8 @@ def invoices(request):
 
 
 def profile(request):
+
+    
     if request.user.position == 'landlord':
         profile = LandLord.objects.get(user=request.user)
         
@@ -98,6 +101,33 @@ def profile(request):
             profile.property_address = request.POST.get('property_address')
             profile.year_of_allocation = request.POST.get('year_of_allocation')
             profile.property_status = request.POST.get('property_status')
+            
+            # Handle profile image if uploaded
+            if request.FILES.get('profile_image'):
+                profile.profile_image = request.FILES['profile_image']
+            
+            profile.save()
+            messages.success(request, 'Profile updated successfully!')
+            return redirect('profile')
+    
+
+    
+
+    elif request.user.position == 'tenant':
+        profile = Tenant.objects.get(user=request.user)
+        
+        if request.method == 'POST':
+            # Update user fields
+            request.user.email = request.POST.get('email')
+            request.user.save()
+            
+            # Update profile fields
+            profile.title = request.POST.get('title')
+            profile.full_name = request.POST.get('full_name')
+            profile.phone_number = request.POST.get('phone_number')
+            profile.contact_address = request.POST.get('contact_address')
+            profile.property_occupied = request.POST.get('property_occupied')
+            profile.date_of_tenancy = request.POST.get('date_of_tenancy')
             
             # Handle profile image if uploaded
             if request.FILES.get('profile_image'):
@@ -169,6 +199,12 @@ def estate_pass(request):
         profile = LandLord.objects.get(user = request.user)
         dependents_list = Dependent.objects.filter(landlord=profile)
 
+ 
+    elif request.user.position == 'tenant':
+        profile = Tenant.objects.get(user = request.user)
+        dependents_list = TenantDependent.objects.filter(tenant=profile)
+        
+
     context = {
         'profile': profile,
         'dependents': dependents_list,
@@ -181,6 +217,10 @@ def dependents(request):
     if request.user.position == 'landlord':
         profile = LandLord.objects.get(user = request.user)
         dependents_list = Dependent.objects.filter(landlord=profile)
+
+    elif request.user.position == 'tenant':
+        profile = Tenant.objects.get(user = request.user)
+        dependents_list = Dependent.objects.filter(tenant=profile)
 
     context = {
         'profile': profile,
@@ -233,82 +273,156 @@ def add_apartment(request):
 
 @login_required
 def add_dependent(request):
-    if request.user.position != 'landlord':
-        messages.error(request, 'Only landlords can add dependents.')
-        return redirect('dependents')
+    if request.user.position == 'landlord':
 
-    if request.method == 'POST':
-        try:
-            # Get the landlord profile
-            landlord_profile = LandLord.objects.get(user=request.user)
 
-            # Create new dependent
-            dependent = Dependent(
-                landlord=landlord_profile,
-                full_name=request.POST.get('full_name'),
-                relationship=request.POST.get('relationship'),
-                date_of_birth=request.POST.get('date_of_birth'),
-                gender=request.POST.get('gender'),
-                phone_number=request.POST.get('phone_number', ''),
-                email=request.POST.get('email', ''),
-                id_type=request.POST.get('id_type'),
-                id_number=request.POST.get('id_number'),
-                medical_notes=request.POST.get('medical_notes', ''),
-                remarks=request.POST.get('remarks', ''),
-            )
+        if request.method == 'POST':
+            try:
+                # Get the landlord profile
+                landlord_profile = LandLord.objects.get(user=request.user)
 
-            # Handle file upload if provided
-            if request.FILES.get('passport_photo'):
-                dependent.passport_photo = request.FILES['passport_photo']
+                # Create new dependent
+                dependent = Dependent(
+                    landlord=landlord_profile,
+                    full_name=request.POST.get('full_name'),
+                    relationship=request.POST.get('relationship'),
+                    date_of_birth=request.POST.get('date_of_birth'),
+                    gender=request.POST.get('gender'),
+                    phone_number=request.POST.get('phone_number', ''),
+                    email=request.POST.get('email', ''),
+                    id_type=request.POST.get('id_type'),
+                    id_number=request.POST.get('id_number'),
+                    medical_notes=request.POST.get('medical_notes', ''),
+                    remarks=request.POST.get('remarks', ''),
+                )
 
-            dependent.save()
-            messages.success(request, 'Dependent added successfully!')
+                # Handle file upload if provided
+                if request.FILES.get('passport_photo'):
+                    dependent.passport_photo = request.FILES['passport_photo']
 
-        except LandLord.DoesNotExist:
-            messages.error(request, 'Landlord profile not found. Please complete your profile first.')
-        except Exception as e:
-            messages.error(request, f'Error adding dependent: {str(e)}')
+                dependent.save()
+                messages.success(request, 'Dependent added successfully!')
 
-    return redirect('dependents')
+            except LandLord.DoesNotExist:
+                messages.error(request, 'Landlord profile not found. Please complete your profile first.')
+            except Exception as e:
+                messages.error(request, f'Error adding dependent: {str(e)}')
+        return redirect('tenant-dependents')
+
+
+
+
+    elif request.user.position == 'tenant':
+
+        if request.method == 'POST':
+            try:
+                # Get the landlord profile
+                tenant_profile = Tenant.objects.get(user=request.user)
+
+                # Create new dependent
+                dependent = TenantDependent(
+                    tenant=tenant_profile,
+                    full_name=request.POST.get('full_name'),
+                    relationship=request.POST.get('relationship'),
+                    date_of_birth=request.POST.get('date_of_birth'),
+                    gender=request.POST.get('gender'),
+                    phone_number=request.POST.get('phone_number', ''),
+                    email=request.POST.get('email', ''),
+                    id_type=request.POST.get('id_type'),
+                    id_number=request.POST.get('id_number'),
+                    medical_notes=request.POST.get('medical_notes', ''),
+                    remarks=request.POST.get('remarks', ''),
+                )
+
+                # Handle file upload if provided
+                if request.FILES.get('passport_photo'):
+                    dependent.passport_photo = request.FILES['passport_photo']
+
+                dependent.save()
+                messages.success(request, 'Dependent added successfully!')
+
+            except LandLord.DoesNotExist:
+                messages.error(request, 'Landlord profile not found. Please complete your profile first.')
+            except Exception as e:
+                messages.error(request, f'Error adding dependent: {str(e)}')
+
+    
+
+        return redirect('tenant-dependents')
 
 
 @login_required
 def edit_dependent(request, dependent_id):
-    if request.user.position != 'landlord':
-        messages.error(request, 'Only landlords can edit dependents.')
+    if request.user.position == 'landlord':
+ 
+
+        try:
+            landlord_profile = LandLord.objects.get(user=request.user)
+            dependent = get_object_or_404(Dependent, id=dependent_id, landlord=landlord_profile)
+
+            if request.method == 'POST':
+                # Update dependent fields
+                dependent.full_name = request.POST.get('full_name')
+                dependent.relationship = request.POST.get('relationship')
+                dependent.date_of_birth = request.POST.get('date_of_birth')
+                dependent.gender = request.POST.get('gender')
+                dependent.phone_number = request.POST.get('phone_number', '')
+                dependent.email = request.POST.get('email', '')
+                dependent.id_type = request.POST.get('id_type')
+                dependent.id_number = request.POST.get('id_number')
+                dependent.medical_notes = request.POST.get('medical_notes', '')
+                dependent.remarks = request.POST.get('remarks', '')
+
+                # Handle file upload if provided
+                if request.FILES.get('passport_photo'):
+                    dependent.passport_photo = request.FILES['passport_photo']
+
+                dependent.save()
+                messages.success(request, 'Dependent updated successfully!')
+                return redirect('dependents')
+
+        except LandLord.DoesNotExist:
+            messages.error(request, 'Landlord profile not found.')
+        except Exception as e:
+            messages.error(request, f'Error updating dependent: {str(e)}')
+
         return redirect('dependents')
+    
 
-    try:
-        landlord_profile = LandLord.objects.get(user=request.user)
-        dependent = get_object_or_404(Dependent, id=dependent_id, landlord=landlord_profile)
+    elif request.user.position == 'tenant':
+ 
 
-        if request.method == 'POST':
-            # Update dependent fields
-            dependent.full_name = request.POST.get('full_name')
-            dependent.relationship = request.POST.get('relationship')
-            dependent.date_of_birth = request.POST.get('date_of_birth')
-            dependent.gender = request.POST.get('gender')
-            dependent.phone_number = request.POST.get('phone_number', '')
-            dependent.email = request.POST.get('email', '')
-            dependent.id_type = request.POST.get('id_type')
-            dependent.id_number = request.POST.get('id_number')
-            dependent.medical_notes = request.POST.get('medical_notes', '')
-            dependent.remarks = request.POST.get('remarks', '')
+        try:
+            tenant_profile = Tenant.objects.get(user=request.user)
+            dependent = get_object_or_404(TenantDependent, id=dependent_id, tenant=tenant_profile)
 
-            # Handle file upload if provided
-            if request.FILES.get('passport_photo'):
-                dependent.passport_photo = request.FILES['passport_photo']
+            if request.method == 'POST':
+                # Update dependent fields
+                dependent.full_name = request.POST.get('full_name')
+                dependent.relationship = request.POST.get('relationship')
+                dependent.date_of_birth = request.POST.get('date_of_birth')
+                dependent.gender = request.POST.get('gender')
+                dependent.phone_number = request.POST.get('phone_number', '')
+                dependent.email = request.POST.get('email', '')
+                dependent.id_type = request.POST.get('id_type')
+                dependent.id_number = request.POST.get('id_number')
+                dependent.medical_notes = request.POST.get('medical_notes', '')
+                dependent.remarks = request.POST.get('remarks', '')
 
-            dependent.save()
-            messages.success(request, 'Dependent updated successfully!')
-            return redirect('dependents')
+                # Handle file upload if provided
+                if request.FILES.get('passport_photo'):
+                    dependent.passport_photo = request.FILES['passport_photo']
 
-    except LandLord.DoesNotExist:
-        messages.error(request, 'Landlord profile not found.')
-    except Exception as e:
-        messages.error(request, f'Error updating dependent: {str(e)}')
+                dependent.save()
+                messages.success(request, 'Dependent updated successfully!')
+                return redirect('dependents')
 
-    return redirect('dependents')
+        except Tenant.DoesNotExist:
+            messages.error(request, 'Tenant profile not found.')
+        except Exception as e:
+            messages.error(request, f'Error updating dependent: {str(e)}')
+
+        return redirect('tenant-dependents')
 
 
 @login_required

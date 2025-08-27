@@ -46,7 +46,7 @@
                                                     <div>
                                                         <h6 class="mb-0 fw-semibold">{{ profile.full_name|default:profile.user.username }} (You)</h6>
                                                         <span class="fs-2">{{ profile.phone_number|default:"No phone" }}</span>
-                                                        <div class="badge bg-primary-subtle text-primary fs-3 mt-1">Landlord</div>
+                                                        <div class="badge bg-primary-subtle text-primary fs-3 mt-1">{{request.user.position}}</div>
                                                     </div>
                                                 </div>
                                             </td>

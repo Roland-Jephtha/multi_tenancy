@@ -48,6 +48,10 @@
                         <!-- ---------------------------------- -->
                         <!-- Home -->
                         <!-- ---------------------------------- -->
+
+
+
+
                         <li class="nav-small-cap">
                             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span class="hide-menu">Home</span>
@@ -56,6 +60,16 @@
                         <!-- ---------------------------------- -->
                         <!-- Estate Management -->
                         <!-- ---------------------------------- -->
+
+                                                
+             
+
+
+                        
+                        {% if request.user.position == "landlord" %}
+
+
+
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{% url 'dashboard' %}" id="get-url" aria-expanded="false">
                                 <span>
@@ -64,6 +78,9 @@
                                 <span class="hide-menu">Estate</span>
                             </a>
                         </li>
+
+
+
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{% url 'tenants' %}" aria-expanded="false">
                                 <span>
@@ -80,6 +97,10 @@
                                 <span class="hide-menu">Dependents</span>
                             </a>
                         </li>
+
+
+
+                        
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{% url 'security' %}" aria-expanded="false">
                                 <span>
@@ -88,6 +109,41 @@
                                 <span class="hide-menu">Security</span>
                             </a>
                         </li>
+
+
+
+                        {% elif request.user.position == "tenant" %}
+
+
+
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{% url 'tenant-dashboard' %}" id="get-url" aria-expanded="false">
+                                <span>
+                                <i class="ti ti-building"></i>
+                                </span>
+                                <span class="hide-menu">Estate</span>
+                            </a>
+                        </li>
+
+
+
+                    <li class="sidebar-item">
+                            <a class="sidebar-link" href="{% url 'tenant-dependents' %}" aria-expanded="false">
+                                <span>
+                                <i class="ti ti-friends"></i>
+                                </span>
+                                <span class="hide-menu">Dependents</span>
+                            </a>
+                        </li>
+
+
+
+                        {% endif %}
+
+
+
+
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="{% url 'news' %}" aria-expanded="false">

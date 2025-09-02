@@ -8,86 +8,7 @@
     <div class="row">
 
         {% comment %} New Tenant Signup - This shows first and hides after selection {% endcomment %}
-            <div class="col-12 hide">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-md-flex align-items-center mb-9">
-                            <div>
-                                <h4 class="card-title fw-semibold">Welcome Jonathan,</h4>
-                                <p class="card-subtitle">To begin, please select an apartment / property available for rent below</p>
-                            </div>
-                        </div>
-                        <!-- Apartment panes -->
-                        <div class="row mt-3">
-                            
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <img class="card-img-top img-responsive" src="{% static 'assets/images/houses/resident.jpg' %}" alt="Card image cap" />
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <span class="d-flex align-items-center fs-2">
-                                                <i class="ti ti-calendar me-1 fs-2"></i> 20 May
-                                                2024
-                                            </span>
-                                            <div class="ms-auto badge bg-success-subtle text-success">
-                                                <a href="javascript:void(0)" class="d-flex align-items-center fs-2 text-success">
-                                                    Resident
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <h4 class="card-title">
-                                            Featured Hydroflora Pots Garden &amp; Outdoors
-                                        </h4>
-                                        <p class="mb-0 card-subtitle">
-                                            Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper quam.
-                                        </p>
-                                        <div class="text-end">
-                                            <button class="btn btn-primary mt-3" type="button" title="Open"
-                                                data-bs-toggle="modal" data-bs-target="#openApartmentModal"
-                                                onclick="">
-                                                See Details
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <img class="card-img-top img-responsive" src="{% static 'assets/images/houses/resident.jpg' %}" alt="Card image cap" />
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <span class="d-flex align-items-center fs-2">
-                                                <i class="ti ti-calendar me-1 fs-2"></i> 20 May
-                                                2024
-                                            </span>
-                                            <div class="ms-auto badge bg-success-subtle text-success">
-                                                <a href="javascript:void(0)" class="d-flex align-items-center fs-2 text-success">
-                                                    Resident
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <h4 class="card-title">
-                                            Featured Hydroflora Pots Garden &amp; Outdoors
-                                        </h4>
-                                        <p class="mb-0 card-subtitle">
-                                            Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper quam.
-                                        </p>
-                                        <div class="text-end">
-                                            <button class="btn btn-primary mt-3" type="button" title="Open"
-                                                data-bs-toggle="modal" data-bs-target="#openApartmentModal"
-                                                onclick="">
-                                                See Details
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
         {% comment %} End of New Tenant Signup {% endcomment %}
 
 
@@ -174,22 +95,27 @@
                 </div>
             </div>
 
+            
+
+        
+                        {% if profile and profile.property_occupied %}
+
             <div class="fcol-12 col-lg-7 d-flex align-items-stretch">
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-4">
                             <div class="col-md-6 d-flex align-items-center justify-content-center">
-                                <img src="{% static 'assets/images/houses/resident.jpg' %}" alt="Apartment Picture" class="img-fluid rounded-3 border" style="max-height: 400px;">
+                                <img src="{{profile.property_occupied.building_picture.url}}" alt="Apartment Picture" class="img-fluid rounded-3 border" style="max-height: 400px;">
                             </div>
                             <div class="col-md-6">
-                                <h4 class="fw-bold mb-2">Featured Hydroflora Pots Garden &amp; Outdoors</h4>
+                                <h4 class="fw-bold mb-2">{{profile.property_occupied.property_name}}</h4>
                                 <div class="mb-2">
                                     <span class="badge bg-success-subtle text-success fs-2 px-3 py-2">Resident</span>
                                     <span class="badge bg-primary-subtle text-primary fs-2 px-3 py-2 ms-2">Apartment</span>
                                 </div>
                                 <div class="mb-2">
                                     <i class="ti ti-map-pin me-1"></i>
-                                    <span class="text-muted">Plot S1A Army Estate</span>
+                                    <span class="text-muted">{{profile.property_occupied.address}}</span>
                                 </div>
                                 <div class="mb-2">
                                     <i class="ti ti-building me-1"></i>
@@ -202,25 +128,25 @@
                             <div class="col-md-6">
                                 <div class="mb-2">
                                     <span class="fw-semibold">Monthly Rent:</span>
-                                    <span class="text-primary">₦1,000,000</span>
+                                    <span class="text-primary">₦{{profile.property_occupied.monthly_rent}}</span>
                                 </div>
                                 <div class="mb-2">
                                     <span class="fw-semibold">Security Deposit:</span>
-                                    <span class="text-primary">₦200,000</span>
+                                    <span class="text-primary">₦{{profile.property_occupied.security_deposit}}</span>
                                 </div>
                                 <div class="mb-2">
                                     <span class="fw-semibold">Lease Term:</span>
-                                    <span class="text-muted">1-year</span>
+                                    <span class="text-muted">{{profile.property_occupied.lease_term}}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-2">
                                     <span class="fw-semibold">Status:</span>
-                                    <span class="badge bg-success-subtle fs-2 text-success px-2 py-1">Active</span>
+                                    <span class="badge bg-success-subtle fs-2 text-success px-2 py-1">{{profile.property_occupied.property_type}}</span>
                                 </div>
                                 <div class="mb-2">
                                     <span class="fw-semibold">Type:</span>
-                                    <span class="badge bg-info-subtle fs-2 text-info px-2 py-1">Residential</span>
+                                    <span class="badge bg-info-subtle fs-2 text-info px-2 py-1">{{profile.property_occupied.property_type}}</span>
                                 </div>
                             </div>
                         </div>
@@ -228,13 +154,18 @@
                             <div class="col-md-12">
                                 <div class="mb-2">
                                     <span class="fw-semibold">Special Notes to Tenant:</span>
-                                    <span class="text-muted">Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper quam.</span>
+                                    <span class="text-muted">{{profile.property_occupied.special_notes}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
+
+            
 
             <div class="col-lg-5 d-flex align-items-stretch">
                 <div class="card w-100">
@@ -292,6 +223,77 @@
                     </div>
                 </div>
             </div>
+
+
+
+            {% else %}
+
+
+
+
+                        <div class="col-12 ">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-md-flex align-items-center mb-9">
+                            <div>
+                                <h4 class="card-title fw-semibold">Welcome {{request.user.username}},</h4>
+                                <p class="card-subtitle">To begin, please select an apartment / property available for rent below</p>
+                            </div>
+                        </div>
+                        <!-- Apartment panes -->
+                        <div class="row mt-3">
+
+
+                            {% for apartment in apartments %}
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <img class="card-img-top img-responsive" src="{{ apartment.building_picture.url }}" alt="Card image cap" />
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <span class="d-flex align-items-center fs-2">
+                                                <i class="ti ti-calendar me-1 fs-2"></i> 20 May
+                                                2024
+                                            </span>
+                                            <div class="ms-auto badge bg-success-subtle text-success">
+                                                <a href="javascript:void(0)" class="d-flex align-items-center fs-2 text-success">
+                                                    {{ apartment.property_status }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <h4 class="card-title">
+                                                    {{ apartment.property_name }}
+                                        </h4>
+                                        <p class="mb-0 card-subtitle">
+                                            {{ apartment.property_type }}
+                                        </p>
+                                        <div class="text-end">
+                                            <button class="btn btn-primary mt-3" type="button" title="Open"
+                                                data-bs-toggle="modal" data-bs-target="#openApartmentModal"
+                                                onclick="populateApartmentModal({{ apartment.id }})">
+                                                See Details
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% endif %}
+
+
+
+
+
+
+
+
         {% comment %} End of Tenant Dashboard Content {% endcomment %}
 
     </div>
@@ -302,7 +304,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title h4" id="exampleModalFullscreenLabel">
-                        <span class="fw-bold">Apartment Details</span>
+                        <span class="fw-bold" id="modalPropertyName">Apartment Details</span>
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -311,21 +313,21 @@
                         <div class="card-body">
                             <div class="row mb-4">
                                 <div class="col-md-6 d-flex align-items-center justify-content-center">
-                                    <img src="{% static 'assets/images/houses/resident.jpg' %}" alt="Apartment Picture" class="img-fluid rounded-3 border" style="max-height: 400px;">
+                                    <img id="modalApartmentImage" src="" alt="Apartment Picture" class="img-fluid rounded-3 border" style="max-height: 400px;">
                                 </div>
                                 <div class="col-md-6">
-                                    <h3 class="fw-bold mb-2">Featured Hydroflora Pots Garden &amp; Outdoors</h3>
+                                    <h3 class="fw-bold mb-2" id="modalPropertyName2"></h3>
                                     <div class="mb-2">
-                                        <span class="badge bg-success-subtle text-success fs-6 px-3 py-2">Resident</span>
-                                        <span class="badge bg-primary-subtle text-primary fs-6 px-3 py-2 ms-2">Apartment</span>
+                                        <span class="badge bg-success-subtle text-success fs-6 px-3 py-2" id="modalPropertyStatus"></span>
+                                        <span class="badge bg-primary-subtle text-primary fs-6 px-3 py-2 ms-2" id="modalPropertyType"></span>
                                     </div>
                                     <div class="mb-2">
                                         <i class="ti ti-map-pin me-1"></i>
-                                        <span class="text-muted">Plot S1A Army Estate</span>
+                                        <span class="text-muted" id="modalPropertyAddress"></span>
                                     </div>
                                     <div class="mb-2">
                                         <i class="ti ti-building me-1"></i>
-                                        <span class="text-muted">Floors: 3 | Units: 12</span>
+                                        <span class="text-muted" id="modalPropertyUnits"></span>
                                     </div>
                                 </div>
                             </div>
@@ -334,25 +336,25 @@
                                 <div class="col-md-6">
                                     <div class="mb-2">
                                         <span class="fw-semibold">Monthly Rent:</span>
-                                        <span class="text-primary">₦1,000,000</span>
+                                        <span class="text-primary" id="modalMonthlyRent"></span>
                                     </div>
                                     <div class="mb-2">
                                         <span class="fw-semibold">Security Deposit:</span>
-                                        <span class="text-primary">₦200,000</span>
+                                        <span class="text-primary" id="modalSecurityDeposit"></span>
                                     </div>
                                     <div class="mb-2">
                                         <span class="fw-semibold">Lease Term:</span>
-                                        <span class="text-muted">1-year</span>
+                                        <span class="text-muted" id="modalLeaseTerm"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-2">
                                         <span class="fw-semibold">Status:</span>
-                                        <span class="badge bg-success-subtle text-success px-2 py-1">Active</span>
+                                        <span class="badge bg-success-subtle text-success px-2 py-1" id="modalStatus"></span>
                                     </div>
                                     <div class="mb-2">
                                         <span class="fw-semibold">Type:</span>
-                                        <span class="badge bg-info-subtle text-info px-2 py-1">Residential</span>
+                                        <span class="badge bg-info-subtle text-info px-2 py-1" id="modalType"></span>
                                     </div>
                                 </div>
                             </div>
@@ -360,7 +362,7 @@
                                 <div class="col-md-12">
                                     <div class="mb-2">
                                         <span class="fw-semibold">Special Notes to Tenant:</span>
-                                        <span class="text-muted">Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper quam.</span>
+                                        <span class="text-muted" id="modalSpecialNotes"></span>
                                     </div>
                                 </div>
                             </div>
@@ -368,18 +370,63 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-end">
-                    <button type="submit" form="apartmentForm" class="btn btn-primary hstack gap-6">
-                        <i class="ti ti-send fs-4"></i>
-                        Select
-                    </button>
-                    <button type="button" class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal">
-                        Cancel
-                    </button>
+                    <form id="apartmentForm" method="post" action="">
+        {% csrf_token %}
+        <input type="hidden" name="apartment_id" id="modalApartmentId" value="" />
+        <button type="submit" class="btn btn-primary hstack gap-6">
+            <i class="ti ti-send fs-4"></i>
+            Select
+        </button>
+    </form>
+    <button type="button" class="btn bg-danger-subtle text-danger" data-bs-dismiss="modal">
+        Cancel
+    </button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        // Prepare apartment data for JS
+        var apartments = {
+            {% for apartment in apartments %}
+            {{ apartment.id }}: {
+                id: {{ apartment.id }},
+                image: "{{ apartment.building_picture.url }}",
+                name: "{{ apartment.property_name|escapejs }}",
+                type: "{{ apartment.property_type|escapejs }}",
+                status: "{{ apartment.property_status|escapejs }}",
+                address: "{{ apartment.address|escapejs }}",
+                units: "{{ apartment.total_units|default:''|escapejs }}",
+                monthly_rent: "{{ apartment.monthly_rent|default:''|escapejs }}",
+                security_deposit: "{{ apartment.security_deposit|default:''|escapejs }}",
+                lease_term: "{{ apartment.lease_term|default:''|escapejs }}",
+                special_notes: "{{ apartment.special_notes|default:''|escapejs }}"
+            },
+            {% endfor %}
+        };
+
+        function populateApartmentModal(id) {
+            var apt = apartments[id];
+            if (!apt) return;
+            document.getElementById('modalApartmentImage').src = apt.image;
+            document.getElementById('modalPropertyName').textContent = apt.name;
+            document.getElementById('modalPropertyName2').textContent = apt.name;
+            document.getElementById('modalPropertyStatus').textContent = apt.status;
+            document.getElementById('modalPropertyType').textContent = apt.type;
+            document.getElementById('modalPropertyAddress').textContent = apt.address;
+            document.getElementById('modalPropertyUnits').textContent = apt.units;
+            document.getElementById('modalMonthlyRent').textContent = apt.monthly_rent;
+            document.getElementById('modalSecurityDeposit').textContent = apt.security_deposit;
+            document.getElementById('modalLeaseTerm').textContent = apt.lease_term;
+            document.getElementById('modalStatus').textContent = apt.status;
+            document.getElementById('modalType').textContent = apt.type;
+            document.getElementById('modalSpecialNotes').textContent = apt.special_notes;
+            document.getElementById('modalApartmentId').value = apt.id;
+            // Update form action to submit to dashboard view
+            document.getElementById('apartmentForm').action = "";
+        }
+    </script>
 
 {% endblock content %}
 

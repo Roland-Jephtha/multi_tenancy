@@ -156,7 +156,7 @@ def news(request):
 
             if message:
                 BoardNotification.objects.create(
-                    sender=profile,
+                    sender=request.user,
                     notification_type=notification_type,
                     subject=subject,
                     message=message
@@ -171,7 +171,36 @@ def news(request):
         latest_news = News.objects.filter(is_published=True)[:5]
 
         # Get user's notifications status
-        user_notifications = BoardNotification.objects.filter(sender=profile)[:3]
+        user_notifications = BoardNotification.objects.filter(sender=request.user)[:3]
+
+
+    elif request.user.position == 'tenant':
+        profile = Tenant.objects.get(user = request.user)
+
+        # Handle board notification submission
+        if request.method == 'POST':
+            message = request.POST.get('message')
+            notification_type = request.POST.get('notification_type', 'general')
+            subject = request.POST.get('subject', '')
+
+            if message:
+                BoardNotification.objects.create(
+                    sender=request.user,
+                    notification_type=notification_type,
+                    subject=subject,
+                    message=message
+                )
+                messages.success(request, 'Your message has been sent to the Estate Board!')
+            else:
+                messages.error(request, 'Please enter a message.')
+
+            return redirect('news')
+
+        # Get latest news articles (limit to 5 for the main page)
+        latest_news = News.objects.filter(is_published=True)[:5]
+
+        # Get user's notifications status
+        user_notifications = BoardNotification.objects.filter(sender=request.user)[:3]
 
     context = {
         'profile': profile,

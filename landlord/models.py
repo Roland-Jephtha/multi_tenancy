@@ -358,7 +358,7 @@ class BoardNotification(models.Model):
         ('closed', 'Closed'),
     ]
 
-    sender = models.ForeignKey(LandLord, on_delete=models.CASCADE, related_name='board_notifications')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='board_notifications')
     notification_type = models.CharField(max_length=20, choices=NOTIFICATION_TYPE_CHOICES, default='general')
     subject = models.CharField(max_length=200, blank=True, null=True)
     message = models.TextField()

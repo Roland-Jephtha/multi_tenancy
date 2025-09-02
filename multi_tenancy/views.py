@@ -86,6 +86,12 @@ def login(request):
                 user.backend = 'django.contrib.auth.backends.ModelBackend'
                 auth_login(request, user)
                 messages.success(request, "Login successful!")
+
+                if request.user.position == "landlord":
+                    return redirect("dashboard")
+                elif request.user.position == "tenant":
+                    return redirect("tenant-dashboard")
+
                 return redirect("dashboard")
             else:
                 messages.error(request, "Invalid email or password")
